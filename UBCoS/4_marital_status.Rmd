@@ -1,0 +1,631 @@
+---
+title: "Marital Status"
+output: 
+  html_document:
+    theme: united
+    highlight: tango
+    toc: true
+    toc_depth: 6
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true
+---
+
+<!-- ########################################################## --> 
+
+<!-- # Installation, loading packages -->
+<!-- **R script:** -->
+
+```{r setup, include=FALSE}
+source("setup_ubcos.r")
+```
+<!-- ########################################################## --> 
+
+# Description of DataSchema variable 
+
+* Short name: `marital_status`
+* Variable label: `Marital_status`
+* Variable description: `Participant's marital_status`
+* Domain: `Socio-demographic and economic characteristics`
+* Value type: `categorical`
+* Category coding:
+
+**Code** | **Category Label**
+-------- | ------------------
+1        | single
+2        | married-cohabitating
+3        | divorced-separated
+4        | widow
+
+* Category missings: 
+
+**Code** | **Category Label**
+----| ------------------
+991 | CAPI/interviewer error
+992 | Impute
+993 | Disable to measure
+994 | Not applicable
+995 | Does not answer
+996 | Not attempt/not done
+997 | Refuse
+998 | Do not know
+999 | Missing
+
+```{r lab, echo=FALSE}
+ds_label <- "Marital_status"
+c_label  <- c("single"=1, "married-cohabitating"=2, "divorced-separated"=3, "widow"=4, "Missing"=999, "Do not know"=998, "Refuse"=997, "Not attempt not done"=996, "Does not answer"=995,  "Not applicable"=994, "Disable to measure"=993, "Impute"=992, "CAPI interviewer error"=991)
+m_label <- c("single"=1, "married-cohabitating"=2, "divorced-separated"=3, "widow"=4)
+```
+
+<!-- ########################################################## --> 
+
+# Data process
+
+## Uppsala 1st generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG1W1`
+* Description: 
+
+```{r f11, echo=FALSE}
+sds <- ubcosG1W1[,c("athlosid", "marital_status1960")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+**R script:**
+```{r h11}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d11, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v11, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s11, echo=FALSE}
+load("UBCoS_g1_w1.rdata")
+UBCoS_g1_w1 <- full_join(UBCoS_g1_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w1, file="UBCoS_g1_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w1.rdata")
+UBCoS_m_g1_w1 <- full_join(UBCoS_m_g1_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w1, file="UBCoS_m_g1_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG1W2`
+* Description: 
+
+```{r f12, echo=FALSE}
+sds <- ubcosG1W2[ , c("athlosid", "marital_status1970")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+**R script:**
+```{r h12}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d12, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v12, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s12, echo=FALSE}
+load("UBCoS_g1_w2.rdata")
+UBCoS_g1_w2 <- full_join(UBCoS_g1_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w2, file="UBCoS_g1_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w2.rdata")
+UBCoS_m_g1_w2 <- full_join(UBCoS_m_g1_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w2, file="UBCoS_m_g1_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG1W3`
+* Description: 
+
+```{r f13, echo=FALSE}
+sds <- ubcosG1W3[ , c("athlosid", "marital_status1980")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+**R script:**
+```{r h13}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d13, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v13, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s13, echo=FALSE}
+load("UBCoS_g1_w3.rdata")
+UBCoS_g1_w3 <- full_join(UBCoS_g1_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w3, file="UBCoS_g1_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w3.rdata")
+UBCoS_m_g1_w3 <- full_join(UBCoS_m_g1_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w3, file="UBCoS_m_g1_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG1W4`
+* Description: 
+
+```{r f14, echo=FALSE}
+sds <- ubcosG1W4[ , c("athlosid", "marital_status1990")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+
+
+
+**R script:**
+```{r h14}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d14, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v14, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s14, echo=FALSE}
+load("UBCoS_g1_w4.rdata")
+UBCoS_g1_w4 <- full_join(UBCoS_g1_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w4, file="UBCoS_g1_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w4.rdata")
+UBCoS_m_g1_w4 <- full_join(UBCoS_m_g1_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w4, file="UBCoS_m_g1_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+No data.
+
+### Wave 6
+
+No data.
+
+
+<!-- ###################################################################################################### -->
+<!-- ###################################################################################################### --> 
+
+
+## Uppsala 2nd generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG2W1`
+* Description: 
+
+```{r f21, echo=FALSE}
+sds <- ubcosG2W1[, c("athlosid", "marital_status1960")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+
+
+
+**R script:**
+```{r h21}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d21, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v21, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s21, echo=FALSE}
+load("UBCoS_g2_w1.rdata")
+UBCoS_g2_w1 <- full_join(UBCoS_g2_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w1, file="UBCoS_g2_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w1.rdata")
+UBCoS_m_g2_w1 <- full_join(UBCoS_m_g2_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w1, file="UBCoS_m_g2_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG2W2`
+* Description: 
+
+```{r f22, echo=FALSE}
+sds <- ubcosG2W2[ , c("athlosid", "marital_status1970")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+
+
+
+**R script:**
+```{r h22}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d22, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v22, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s22, echo=FALSE}
+load("UBCoS_g2_w2.rdata")
+UBCoS_g2_w2 <- full_join(UBCoS_g2_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w2, file="UBCoS_g2_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w2.rdata")
+UBCoS_m_g2_w2 <- full_join(UBCoS_m_g2_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w2, file="UBCoS_m_g2_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG2W3`
+* Description: 
+
+```{r f23, echo=FALSE}
+sds <- ubcosG2W3[ , c("athlosid", "marital_status1980")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+
+
+
+**R script:**
+```{r h23}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d23, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v23, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s23, echo=FALSE}
+load("UBCoS_g2_w3.rdata")
+UBCoS_g2_w3 <- full_join(UBCoS_g2_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w3, file="UBCoS_g2_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w3.rdata")
+UBCoS_m_g2_w3 <- full_join(UBCoS_m_g2_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w3, file="UBCoS_m_g2_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+* Name: `marital_status`
+* Label: `Marital_status of the individual registered`
+* Table name: `ubcosG2W4`
+* Description: 
+
+```{r f24, echo=FALSE}
+sds <- ubcosG2W4[ , c("athlosid", "marital_status1990")]
+sds[[2]] <- labelled(sds[[2]], labels = c_label)
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+
+```
+
+#### Harmonisation algorithm
+
+No changes.
+
+
+
+
+**R script:**
+```{r h24}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], marital_status=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d24, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent) + theme(axis.text.x=element_text(angle=30, hjust=1))
+```
+
+#### Validation
+```{r v24, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s24, echo=FALSE}
+load("UBCoS_g2_w4.rdata")
+UBCoS_g2_w4 <- full_join(UBCoS_g2_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w4, file="UBCoS_g2_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w4.rdata")
+UBCoS_m_g2_w4 <- full_join(UBCoS_m_g2_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w4, file="UBCoS_m_g2_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+No data.
+
+### Wave 6
+
+No data.
+
+
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+
+
+## Validation accross waves
+
+The validation consists of checking just the most frequent (>0.3%) trajectories of marital-status.
+
+**R script**
+```{r vv}
+# For 1st generation:
+list_df <- list(tibble(id= UBCoS_m_g1_w1$id, marital_status1=UBCoS_m_g1_w1$marital_status),
+                tibble(id= UBCoS_m_g1_w2$id, marital_status2=UBCoS_m_g1_w2$marital_status),
+                tibble(id= UBCoS_m_g1_w3$id, marital_status3=UBCoS_m_g1_w3$marital_status), 
+                tibble(id= UBCoS_m_g1_w4$id, marital_status4=UBCoS_m_g1_w4$marital_status) )
+MyMerge <- function(x, y){
+  df <- full_join(x, y, by= "id")
+  return(df)
+}
+new.df <- Reduce(MyMerge, list_df)
+
+v.ndf <- with(new.df, paste(marital_status1, marital_status2, marital_status3, marital_status4,sep=""))
+ff <- frq(v.ndf)[[1]][,c(1,2,4)]
+ff <- ff[ff[,3]>=0.3,]
+kable(ff[order(-ff$frq),])
+
+# For 2nd generation:**
+list_df <- list(tibble(id= UBCoS_m_g2_w1$id, marital_status1=UBCoS_m_g2_w1$marital_status), 
+                tibble(id= UBCoS_m_g2_w2$id, marital_status2=UBCoS_m_g2_w2$marital_status),
+                tibble(id= UBCoS_m_g2_w3$id, marital_status3=UBCoS_m_g2_w3$marital_status), 
+                tibble(id= UBCoS_m_g2_w4$id, marital_status4=UBCoS_m_g2_w4$marital_status) )
+
+new.df <- Reduce(MyMerge, list_df)
+
+v.ndf <- with(new.df, paste(marital_status1, marital_status2, marital_status3, marital_status4,sep=""))
+ff<- frq(v.ndf)[[1]][,c(1,2,4)]
+ff <- ff[ff[,3]>=0.3,]
+kable(ff[order(-ff$frq),])
+```
+
+
+# Quality estimation
+[Comments on the quality of the new harmonised variable.]

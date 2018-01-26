@@ -1,0 +1,21 @@
+name: "Harmonisation Report"
+output_dir: "."
+navbar:
+  title: "Harmonisation Report"
+  type: inverse
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "Sudies"
+      icon: fa-gear
+      menu:
+        - text: "UBCoS"
+          href: UBCoS/ubcos_h.html
+
+output:
+  html_document:
+    theme: cosmo
+    include:
+      after_body: footer.html
+    css: styles.css

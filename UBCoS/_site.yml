@@ -1,0 +1,65 @@
+name: "ubcos_harmonisation"
+output_dir: _site
+navbar:
+  title: "UBCoS Harmonisation"
+  type: inverse
+  left:
+    - text: "About"
+      icon: fa-home
+      href: ubcos_h.html
+    - text: "Sociodemog. & Econ."
+      icon: fa-gear
+      menu:
+        - text: "Birth"
+          href: 1_birth.html
+        - text: "Age"
+          href: 2_age.html
+        - text: "Sex"
+          href: 3_sex.html
+        - text: "Marital status"
+          href: 4_marital_status.html
+        - text: "Education"
+          href: 5_education.html          
+        - text: "Living alone"
+          href: 6_living_alone.html          
+        - text: "Wealth"
+          href: 9_income.html
+        - text: "Employed"
+          href: 10_employed.html          
+    - text: "Life expectancy"
+      icon: fa-gear
+      menu:
+        - text: "Death"
+          href: 1_death.html
+    - text: "Diseases"
+      icon: fa-gear
+      menu:
+        - text: "Diabetes"
+          href: 1_h_diabetes.html
+        - text: "Asthma"
+          href: 2_h_asthma.html          
+        - text: "CPD"
+          href: 3_cpd.html
+        - text: "Hypertension"
+          href: 5_hypertension.html
+        - text: "Arthritis"
+          href: 6_arthritis.html
+        - text: "Angina"
+          href: 7_angina.html
+        - text: "MI HA"
+          href: 8_mi_ha.html
+        - text: "Stroke"
+          href: 9_stroke.html          
+        - text: "CVD"
+          href: 10_cvd.html
+        - text: "CVD hard"
+          href: 11_cvd_hard.html
+        - text: "Cancer"
+          href: 13_cancer.html
+
+output:
+  html_document:
+    theme: united
+    include:
+      after_body: footer.html
+    css: styles.css

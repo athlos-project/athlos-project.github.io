@@ -1,0 +1,1209 @@
+---
+title: "CPD"
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_depth: 6
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true
+---
+
+<!-- ########################################################## --> 
+
+<!-- # Installation, loading packages -->
+<!-- **R script:** -->
+
+```{r setup, include=FALSE}
+source("setup_ubcos.r")
+```
+<!-- ########################################################## --> 
+
+# Description of DataSchema variable 
+
+Two variables are created: `h_cpd`and `h_cpd_age`:
+
+* Short name: `h_cpd`
+* Variable label: `CPD`
+* Variable description**: `History of cpd. Chronic disease.`
+* Domain: `Diseases`
+* Value type: `categorical`
+* Category coding:
+
+**Code** | **Category Label**
+-------- | ------------------
+0        | No
+1        | Yes
+
+* Short name: `h_cpd_age`
+* Variable label: `Age of cpd`
+* Variable description**: `Age of first diagnosis of cpd. Chronic disease.`
+* Domain: `Diseases`
+* Value type: `continuous`
+
+* Category missings in both variables: 
+
+**Code** | **Category Label**
+----| ------------------
+991 | CAPI/interviewer error
+992 | Impute
+993 | Disable to measure
+994 | Not applicable
+995 | Does not answer
+996 | Not attempt/not done
+997 | Refuse
+998 | Do not know
+999 | Missing
+
+```{r lab, echo=FALSE}
+ds_label   <- "CPD"
+ds_label_a <- "Age of cpd"
+c_label    <- c("No"=0, "Yes"=1, "Missing"=999, "Do not know"=998, "Refuse"=997, "Not attempt not done"=996, "Does not answer"=995,  "Not applicable"=994, "Disable to measure"=993, "Impute"=992, "CAPI interviewer error"=991)
+c_label_a <- c("Missing"=999, "Do not know"=998, "Refuse"=997, "Not attempt not done"=996, "Does not answer"=995,  "Not applicable"=994, "Disable to measure"=993, "Impute"=992, "CAPI interviewer error"=991)
+m_label    <- c("No"=0, "Yes"=1)
+```
+
+<!-- ########################################################## --> 
+
+# Data process
+
+## Uppsala 1st generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd_firstdate`
+* Table name: `ubcosG1W1`
+* Description: `Date of first diagnosis of cpd`
+
+```{r f111, echo=FALSE}
+sds <- ubcosG1W1[c("athlosid", "cpd_firstdate", "cpd_firstage")]
+
+#kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=sds[[2]])) + geom_histogram(binwidth=100, fill="steelblue") + ylab("Frequency") + xlab(ds_label)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W1`
+* Description: `Age of first diagnosis of cpd`
+
+```{r f112, echo=FALSE}
+#kable(frq(sds[[3]])[[1]])
+ggplot(sds, aes(x=sds[[3]])) + geom_histogram(binwidth=5, fill="steelblue", col="red") + ylab("Frequency") + xlab(ds_label)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1960, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h111}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=0)
+
+for (i in 1:length(sds[[2]])) {
+  if (!is.na(ubcosG1W1$cpd_firstdate[i]) & ubcosG1W1$cpd_firstdate[i] <= "1960-11-01")
+	     hds$h_cpd[i] <- 1
+}
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1960, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h112}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+
+for (i in 1:length(sds[[2]])) {
+  if (hds$h_cpd[i] != 1)
+    hds$h_cpd_age[i] <- 994   # not applicable
+}
+```
+
+#### Statistical description of the new harmonised variable
+```{r d11, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+kable(frq(hds[[3]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label_a) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+<!---###### Validation
+```{r v11, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s11, echo=FALSE}
+load("UBCoS_g1_w1.rdata")
+UBCoS_g1_w1 <- full_join(UBCoS_g1_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w1, file="UBCoS_g1_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w1.rdata")
+UBCoS_m_g1_w1 <- full_join(UBCoS_m_g1_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w1, file="UBCoS_m_g1_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1970`
+* Table name: `ubcosG1W2`
+* Description: `First diagnosis of cpd before the 1st November 1970`
+
+```{r f121, echo=FALSE}
+sds <- ubcosG1W2[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1970")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W2`
+* Label: `Age of first diagnosis of cpd before the 1st November 1970`
+* Description: 
+
+```{r f122, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1970, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h121}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1970, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h122}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d12, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v12, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s12, echo=FALSE}
+load("UBCoS_g1_w2.rdata")
+UBCoS_g1_w2 <- full_join(UBCoS_g1_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w2, file="UBCoS_g1_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w2.rdata")
+UBCoS_m_g1_w2 <- full_join(UBCoS_m_g1_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w2, file="UBCoS_m_g1_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1980`
+* Table name: `ubcosG1W3`
+* Description: `First diagnosis of cpd before the 15th September 1980`
+
+```{r f131, echo=FALSE}
+sds <- ubcosG1W3[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1980")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W3`
+* Label: `Age of first diagnosis of cpd before the 15th September 1980`
+* Description: 
+
+```{r f132, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 15th September 1980, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h131}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 15th September 1980, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h132}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d13, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v13, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s13, echo=FALSE}
+load("UBCoS_g1_w3.rdata")
+UBCoS_g1_w3 <- full_join(UBCoS_g1_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w3, file="UBCoS_g1_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w3.rdata")
+UBCoS_m_g1_w3 <- full_join(UBCoS_m_g1_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w3, file="UBCoS_m_g1_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1990`
+* Table name: `ubcosG1W4`
+* Description: `First diagnosis of cpd before the 1st November 1990`
+
+```{r f141, echo=FALSE}
+sds <- ubcosG1W4[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1990")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W4`
+* Label: `Age of first diagnosis of cpd before the 1st November 1990`
+* Description: 
+
+```{r f142, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1990, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h141}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1990, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h142}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d14, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v14, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s14, echo=FALSE}
+load("UBCoS_g1_w4.rdata")
+UBCoS_g1_w4 <- full_join(UBCoS_g1_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w4, file="UBCoS_g1_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w4.rdata")
+UBCoS_m_g1_w4 <- full_join(UBCoS_m_g1_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w4, file="UBCoS_m_g1_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd2000`
+* Table name: `ubcosG1W5`
+* Description: `First diagnosis of cpd before the 1st November 2000`
+
+```{r f151, echo=FALSE}
+sds <- ubcosG1W5[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd2000")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W5`
+* Label: `Age of first diagnosis of cpd before the 1st November 2000`
+* Description: 
+
+```{r f152, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 2000, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h151}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 2000, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h152}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d15, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v15, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s15, echo=FALSE}
+load("UBCoS_g1_w5.rdata")
+UBCoS_g1_w5 <- full_join(UBCoS_g1_w5, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w5, file="UBCoS_g1_w5.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w5.rdata")
+UBCoS_m_g1_w5 <- full_join(UBCoS_m_g1_w5, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w5, file="UBCoS_m_g1_w5.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+### Wave 6
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd2008`
+* Table name: `ubcosG1W6`
+* Description: `First diagnosis of cpd before the 1st November 2008`
+
+```{r f161, echo=FALSE}
+sds <- ubcosG1W6[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd2008")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG1W6`
+* Label: `Age of first diagnosis of cpd before the 1st November 2008`
+* Description: 
+
+```{r f162, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 31st December 2008, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h161}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 31st December 2008, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h162}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d16, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v16, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s16, echo=FALSE}
+load("UBCoS_g1_w6.rdata")
+UBCoS_g1_w6 <- full_join(UBCoS_g1_w6, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w6, file="UBCoS_g1_w6.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g1_w6.rdata")
+UBCoS_m_g1_w6 <- full_join(UBCoS_m_g1_w6, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w6, file="UBCoS_m_g1_w6.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+
+<!-- ###################################################################################################### -->
+<!-- ###################################################################################################### --> 
+
+
+## Uppsala 2nd generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd_firstdate`
+* Table name: `ubcosG2W1`
+* Description: `Date of first diagnosis of cpd`
+
+```{r f211, echo=FALSE}
+sds <- ubcosG2W1[c("athlosid", "cpd_firstdate", "cpd_firstage")]
+
+#kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(x=sds[[2]])) + geom_histogram(binwidth=100, fill="steelblue") + ylab("Frequency") + xlab(ds_label)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W1`
+* Description: `Age of first diagnosis of cpd`
+
+```{r f212, echo=FALSE}
+#kable(frq(sds[[3]])[[1]])
+ggplot(sds, aes(x=sds[[3]])) + geom_histogram(binwidth=5, fill="steelblue", col="red") + ylab("Frequency") + xlab(ds_label)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1960, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h211}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=0)
+
+for (i in 1:length(sds[[2]])) {
+  if (!is.na(ubcosG2W1$cpd_firstdate[i]) & ubcosG2W1$cpd_firstdate[i] <= "1960-11-01")
+	     hds$h_cpd[i] <- 1
+}
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1960, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h212}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+
+for (i in 1:length(sds[[2]])) {
+  if (hds$h_cpd[i] != 1)
+    hds$h_cpd_age[i] <- 994   # not applicable
+}
+```
+
+#### Statistical description of the new harmonised variable
+```{r d21, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+kable(frq(hds[[3]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label_a) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+<!---###### Validation
+```{r v21, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s21, echo=FALSE}
+load("UBCoS_g2_w1.rdata")
+UBCoS_g2_w1 <- full_join(UBCoS_g2_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w1, file="UBCoS_g2_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w1.rdata")
+UBCoS_m_g2_w1 <- full_join(UBCoS_m_g2_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w1, file="UBCoS_m_g2_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1970`
+* Table name: `ubcosG2W2`
+* Description: `First diagnosis of cpd before the 1st November 1970`
+
+```{r f221, echo=FALSE}
+sds <- ubcosG2W2[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1970")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W2`
+* Label: `Age of first diagnosis of cpd before the 1st November 1970`
+* Description: 
+
+```{r f222, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1970, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h221}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1970, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h222}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d22, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v22, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s22, echo=FALSE}
+load("UBCoS_g2_w2.rdata")
+UBCoS_g2_w2 <- full_join(UBCoS_g2_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w2, file="UBCoS_g2_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w2.rdata")
+UBCoS_m_g2_w2 <- full_join(UBCoS_m_g2_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w2, file="UBCoS_m_g2_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1980`
+* Table name: `ubcosG2W3`
+* Description: `First diagnosis of cpd before the 15th September 1980`
+
+```{r f231, echo=FALSE}
+sds <- ubcosG2W3[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1980")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W3`
+* Label: `Age of first diagnosis of cpd before the 15th September 1980`
+* Description: 
+
+```{r f232, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 15th September 1980, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h231}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 15th September 1980, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h232}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d23, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v23, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s23, echo=FALSE}
+load("UBCoS_g2_w3.rdata")
+UBCoS_g2_w3 <- full_join(UBCoS_g2_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w3, file="UBCoS_g2_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w3.rdata")
+UBCoS_m_g2_w3 <- full_join(UBCoS_m_g2_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w3, file="UBCoS_m_g2_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd1990`
+* Table name: `ubcosG2W4`
+* Description: `First diagnosis of cpd before the 1st November 1990`
+
+```{r f241, echo=FALSE}
+sds <- ubcosG2W4[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd1990")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W4`
+* Label: `Age of first diagnosis of cpd before the 1st November 1990`
+* Description: 
+
+```{r f242, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 1990, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h241}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 1990, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h242}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d24, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v24, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s24, echo=FALSE}
+load("UBCoS_g2_w4.rdata")
+UBCoS_g2_w4 <- full_join(UBCoS_g2_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w4, file="UBCoS_g2_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w4.rdata")
+UBCoS_m_g2_w4 <- full_join(UBCoS_m_g2_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w4, file="UBCoS_m_g2_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd2000`
+* Table name: `ubcosG2W5`
+* Description: `First diagnosis of cpd before the 1st November 2000`
+
+```{r f251, echo=FALSE}
+sds <- ubcosG2W5[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd2000")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W5`
+* Label: `Age of first diagnosis of cpd before the 1st November 2000`
+* Description: 
+
+```{r f252, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 1st November 2000, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h251}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 1st November 2000, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h252}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d25, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v25, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s25, echo=FALSE}
+load("UBCoS_g2_w5.rdata")
+UBCoS_g2_w5 <- full_join(UBCoS_g2_w5, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w5, file="UBCoS_g2_w5.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w5.rdata")
+UBCoS_m_g2_w5 <- full_join(UBCoS_m_g2_w5, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w5, file="UBCoS_m_g2_w5.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+### Wave 6
+
+#### Study-specific variable description
+
+Two variables are taken from the UBCoS dataset:
+
+* Name: `cpd2008`
+* Table name: `ubcosG2W6`
+* Description: `First diagnosis of cpd before the 1st November 2008`
+
+```{r f261, echo=FALSE}
+sds <- ubcosG2W6[c("athlosid", "cpd_firstdate", "cpd_firstage", "cpd2008")]
+
+kable(frq(sds[[4]])[[1]])
+
+ggplot(sds, aes(x=as.factor(sds[[4]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+* Name: `cpd_firstage`
+* Table name: `ubcosG2W6`
+* Label: `Age of first diagnosis of cpd before the 1st November 2008`
+* Description: 
+
+```{r f262, echo=FALSE}
+ssds <- data.frame(sds) #remove tibble format
+
+ggplot(ssds[ssds[,4]==1,], aes(x=ssds[ssds[,4]==1,3],)) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+#### Harmonisation algorithm
+
+For the variable `h_cpd`, value 0 is assigned when date of first diagnosis of cpd is later than 31st December 2008, the approximate date of the census registry, or never, and value 1 when prior to that date. 
+
+**R script:**
+```{r h261}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], h_cpd=sds[[4]])
+```
+
+For the variable `h_cpd_age`, the same age is assigned when the first diagnosis of cpd is before than 31st December 2008, otherwise the value 994 (not applicable) is assigned.
+
+**R script:**
+```{r h262}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds$h_cpd_age <- sds[[3]]
+hds[hds$h_cpd != 1,]$h_cpd_age <- 994
+```
+
+#### Statistical description of the new harmonised variable
+```{r d26, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+hds[[3]] <- labelled(hds[[3]], labels = c_label_a)
+ggplot(hds[hds[[3]]<990,], aes(x=hds[hds[[3]]<990,3])) + geom_histogram(aes(), fill="steelblue", breaks=seq(30, 65, by =5), col="red") + xlab(ds_label_a)
+```
+
+<!---###### Validation
+```{r v26, echo=FALSE}
+#taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+#kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+-->
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s26, echo=FALSE}
+load("UBCoS_g2_w6.rdata")
+UBCoS_g2_w6 <- full_join(UBCoS_g2_w6, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w6, file="UBCoS_g2_w6.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(hds[[2]], labels = m_label)
+mds[[3]][mds[[3]] %in% c(991:999)] <- NA
+val_labels(mds[[3]]) <- NULL
+load("UBCoS_m_g2_w6.rdata")
+UBCoS_m_g2_w6 <- full_join(UBCoS_m_g2_w6, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w6, file="UBCoS_m_g2_w6.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+
+
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+
+
+## Validation accross waves
+
+The validation consists to check the variable accross waves. 
+
+**R script**
+```{r vv}
+# For 1st generation:
+list_df <- list(tibble(id= UBCoS_m_g1_w1$id, hdiab1=UBCoS_m_g1_w1$h_cpd, adiab1=UBCoS_m_g1_w1$h_cpd_age),
+                tibble(id= UBCoS_m_g1_w2$id, hdiab2=UBCoS_m_g1_w2$h_cpd, adiab2=UBCoS_m_g1_w2$h_cpd_age),
+                tibble(id= UBCoS_m_g1_w3$id, hdiab3=UBCoS_m_g1_w3$h_cpd, adiab3=UBCoS_m_g1_w3$h_cpd_age), 
+                tibble(id= UBCoS_m_g1_w4$id, hdiab4=UBCoS_m_g1_w4$h_cpd, adiab4=UBCoS_m_g1_w4$h_cpd_age),
+                tibble(id= UBCoS_m_g1_w5$id, hdiab5=UBCoS_m_g1_w5$h_cpd, adiab5=UBCoS_m_g1_w5$h_cpd_age), 
+                tibble(id= UBCoS_m_g1_w6$id, hdiab6=UBCoS_m_g1_w6$h_cpd, adiab6=UBCoS_m_g1_w6$h_cpd_age))
+MyMerge <- function(x, y){
+  df <- full_join(x, y, by= "id")
+  return(df)
+}
+new.df <- Reduce(MyMerge, list_df)
+
+v.ndf <- with(new.df, paste(hdiab1, hdiab2, hdiab3, hdiab4, hdiab5, hdiab6,sep=""))
+kable(frq(v.ndf)[[1]][,c(1,2,4)])
+
+
+f.ascending <- function(v) {  # return true or false
+  return(all(diff(na.omit(v)) >= 0))
+}
+
+adiab <- as.matrix(new.df[, c("adiab1", "adiab2", "adiab3", "adiab4", "adiab5", "adiab6")])
+tf <- apply(adiab, 1, f.ascending)
+table(tf)
+
+
+# For 2nd generation:**
+list_df <- list(tibble(id= UBCoS_m_g2_w1$id, hdiab1=UBCoS_m_g2_w1$h_cpd, adiab1=UBCoS_m_g2_w1$h_cpd_age),
+                tibble(id= UBCoS_m_g2_w2$id, hdiab2=UBCoS_m_g2_w2$h_cpd, adiab2=UBCoS_m_g2_w2$h_cpd_age),
+                tibble(id= UBCoS_m_g2_w3$id, hdiab3=UBCoS_m_g2_w3$h_cpd, adiab3=UBCoS_m_g2_w3$h_cpd_age), 
+                tibble(id= UBCoS_m_g2_w4$id, hdiab4=UBCoS_m_g2_w4$h_cpd, adiab4=UBCoS_m_g2_w4$h_cpd_age),
+                tibble(id= UBCoS_m_g2_w5$id, hdiab5=UBCoS_m_g2_w5$h_cpd, adiab5=UBCoS_m_g2_w5$h_cpd_age), 
+                tibble(id= UBCoS_m_g2_w6$id, hdiab6=UBCoS_m_g2_w6$h_cpd, adiab6=UBCoS_m_g2_w6$h_cpd_age))
+
+new.df <- Reduce(MyMerge, list_df)
+v.ndf <- with(new.df, paste(hdiab1, hdiab2, hdiab3, hdiab4, hdiab5, hdiab6,sep=""))
+kable(frq(v.ndf)[[1]][,c(1,2,4)])
+
+adiab <- as.matrix(new.df[, c("adiab1", "adiab2", "adiab3", "adiab4", "adiab5", "adiab6")])
+tf <- apply(adiab, 1, f.ascending)
+table(tf)
+```
+
+# Quality estimation
+[Comments on the quality of the new harmonised variable..]

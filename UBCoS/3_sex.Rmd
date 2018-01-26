@@ -1,0 +1,862 @@
+---
+title: "Sex"
+output: 
+  html_document:
+    theme: united
+    highlight: tango
+    toc: true
+    toc_depth: 6
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    number_sections: true
+---
+
+<!-- ########################################################## --> 
+
+<!-- # Installation, loading packages -->
+<!-- **R script:** -->
+
+```{r setup, include=FALSE}
+source("setup_ubcos.r")
+```
+<!-- ########################################################## --> 
+
+# Description of DataSchema variable 
+
+* Short name: `sex`
+* Variable label: `biological sex`
+* Variable description: `participant's biological sex`
+* Domain: `Socio-demographic and economic characteristics`
+* Value type: `categorical`
+* Category coding:
+
+**Code** | **Category Label**
+-------- | ------------------
+0        | female
+1        | male
+
+* Category missings: 
+
+**Code** | **Category Label**
+----| ------------------
+991 | CAPI/interviewer error
+992 | Impute
+993 | Disable to measure
+994 | Not applicable
+995 | Does not answer
+996 | Not attempt/not done
+997 | Refuse
+998 | Do not know
+999 | Missing
+
+```{r lab, echo=FALSE}
+ds_label <- "Sex"
+c_label  <- c("Female"=0, "Male"=1, "Missing"=999, "Do not know"=998, "Refuse"=997, "Not attempt not done"=996, "Does not answer"=995,  "Not applicable"=994, "Disable to measure"=993, "Impute"=992, "CAPI interviewer error"=991)
+m_label <- c("Female"=0, "Male"=1)
+```
+
+<!-- ########################################################## --> 
+
+# Data process
+
+## Uppsala 1st generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W1`
+* Description: 
+
+```{r f11, echo=FALSE}
+sds <- ubcosG1W1[c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h11}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d11, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+#ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+
+ggplot(hds, aes(fill=factor(sds[[3]]), x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+```
+
+#### Validation
+```{r v11, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s11, echo=FALSE}
+load("UBCoS_g1_w1.rdata")
+UBCoS_g1_w1 <- full_join(UBCoS_g1_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w1, file="UBCoS_g1_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w1.rdata")
+UBCoS_m_g1_w1 <- full_join(UBCoS_m_g1_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w1, file="UBCoS_m_g1_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W2`
+* Description: 
+
+```{r f12, echo=FALSE}
+sds <- ubcosG1W2[ , c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h12}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d12, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v12, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s12, echo=FALSE}
+load("UBCoS_g1_w2.rdata")
+UBCoS_g1_w2 <- full_join(UBCoS_g1_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w2, file="UBCoS_g1_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w2.rdata")
+UBCoS_m_g1_w2 <- full_join(UBCoS_m_g1_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w2, file="UBCoS_m_g1_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W3`
+* Description: 
+
+```{r f13, echo=FALSE}
+sds <- ubcosG1W3[ , c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h13}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d13, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v13, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s13, echo=FALSE}
+load("UBCoS_g1_w3.rdata")
+UBCoS_g1_w3 <- full_join(UBCoS_g1_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w3, file="UBCoS_g1_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w3.rdata")
+UBCoS_m_g1_w3 <- full_join(UBCoS_m_g1_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w3, file="UBCoS_m_g1_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W4`
+* Description: 
+
+```{r f14, echo=FALSE}
+sds <- ubcosG1W4[ , c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h14}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d14, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v14, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s14, echo=FALSE}
+load("UBCoS_g1_w4.rdata")
+UBCoS_g1_w4 <- full_join(UBCoS_g1_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w4, file="UBCoS_g1_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w4.rdata")
+UBCoS_m_g1_w4 <- full_join(UBCoS_m_g1_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w4, file="UBCoS_m_g1_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W5`
+* Description: 
+
+```{r f15, echo=FALSE}
+sds <- ubcosG1W5[ , c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h15}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d15, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v15, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s15, echo=FALSE}
+load("UBCoS_g1_w5.rdata")
+UBCoS_g1_w5 <- full_join(UBCoS_g1_w5, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w5, file="UBCoS_g1_w5.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w5.rdata")
+UBCoS_m_g1_w5 <- full_join(UBCoS_m_g1_w5, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w5, file="UBCoS_m_g1_w5.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 6
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG1W6`
+* Description: 
+
+```{r f16, echo=FALSE}
+sds <- ubcosG1W6[ , c("athlosid", "male", "ubcos1")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h16}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d16, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v16, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s16, echo=FALSE}
+load("UBCoS_g1_W6.rdata")
+UBCoS_g1_W6 <- full_join(UBCoS_g1_w6, hds, by="id", all=TRUE)
+#save(UBCoS_g1_w6, file="UBCoS_g1_w6.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g1_w6.rdata")
+UBCoS_m_g1_w6 <- full_join(UBCoS_m_g1_w6, mds, by="id", all=TRUE)
+#save(UBCoS_m_g1_w6, file="UBCoS_m_g1_w6.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+
+<!-- ###################################################################################################### -->
+<!-- ###################################################################################################### --> 
+
+
+## Uppsala 2nd generation cohort
+
+### Wave 1
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W1`
+* Description: 
+
+```{r f21, echo=FALSE}
+sds <- ubcosG2W1[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h21}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d21, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v21, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s21, echo=FALSE}
+load("UBCoS_g2_w1.rdata")
+UBCoS_g2_w1 <- full_join(UBCoS_g2_w1, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w1, file="UBCoS_g2_w1.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w1.rdata")
+UBCoS_m_g2_w1 <- full_join(UBCoS_m_g2_w1, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w1, file="UBCoS_m_g2_w1.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 2
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W2`
+* Description: 
+
+```{r f22, echo=FALSE}
+sds <- ubcosG2W2[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h22}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d22, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v22, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s22, echo=FALSE}
+load("UBCoS_g2_w2.rdata")
+UBCoS_g2_w2 <- full_join(UBCoS_g2_w2, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w2, file="UBCoS_g2_w2.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w2.rdata")
+UBCoS_m_g2_w2 <- full_join(UBCoS_m_g2_w2, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w2, file="UBCoS_m_g2_w2.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 3
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W3`
+* Description: 
+
+```{r f23, echo=FALSE}
+sds <- ubcosG2W3[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h23}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d23, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v23, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s23, echo=FALSE}
+load("UBCoS_g2_w3.rdata")
+UBCoS_g2_w3 <- full_join(UBCoS_g2_w3, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w3, file="UBCoS_g2_w3.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w3.rdata")
+UBCoS_m_g2_w3 <- full_join(UBCoS_m_g2_w3, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w3, file="UBCoS_m_g2_w3.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 4
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W4`
+* Description: 
+
+```{r f24, echo=FALSE}
+sds <- ubcosG2W4[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h24}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d24, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v24, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s24, echo=FALSE}
+load("UBCoS_g2_w4.rdata")
+UBCoS_g2_w4 <- full_join(UBCoS_g2_w4, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w4, file="UBCoS_g2_w4.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w4.rdata")
+UBCoS_m_g2_w4 <- full_join(UBCoS_m_g2_w4, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w4, file="UBCoS_m_g2_w4.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 5
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W5`
+* Description: 
+
+```{r f25, echo=FALSE}
+sds <- ubcosG2W5[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h25}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d25, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v25, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s25, echo=FALSE}
+load("UBCoS_g2_w5.rdata")
+UBCoS_g2_w5 <- full_join(UBCoS_g2_w5, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w5, file="UBCoS_g2_w5.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w5.rdata")
+UBCoS_m_g2_w5 <- full_join(UBCoS_m_g2_w5, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w5, file="UBCoS_m_g2_w5.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+### Wave 6
+
+#### Study-specific variable description
+
+* Name: `male`
+* Label: `Sex of the individual registered`
+* Table name: `ubcosG2W6`
+* Description: 
+
+```{r f26, echo=FALSE}
+sds <- ubcosG2W6[ , c("athlosid", "male", "ubcos2")]
+
+kable(frq(sds[[2]])[[1]])
+ggplot(sds, aes(fill=factor(sds[[3]]), x=as_factor(sds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), position="dodge") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", hjust=c(2,-1.5,2,-1.5), vjust=-1) + scale_fill_manual(values=c("orange","steelblue"), labels=c("partners", "participants"), name="")
+```
+
+#### Harmonisation algorithm
+
+No changes:
+
+* `1 "Male" into 1`
+* `0 "Female" into 0`
+
+**R script:**
+```{r h26}
+# 'sds': study dataset
+# 'hds': harmonised dataset
+hds <- tibble(id=sds[[1]], sex=sds[[2]])
+```
+
+#### Statistical description of the new harmonised variable
+```{r d26, echo=FALSE}
+hds[[2]] <- labelled(hds[[2]], labels = c_label)
+kable(frq(hds[[2]])[[1]])
+ggplot(hds, aes(x=as_factor(hds[[2]]))) + geom_bar(aes(y=(..count..)/sum(..count..)), width=0.4, fill="steelblue") + xlab(ds_label) + ylab("Proportion") + geom_text(aes(y=((..count..)/sum(..count..)), label=scales::percent((..count..)/sum(..count..))), stat="count", vjust=-0.25) + scale_y_continuous(labels=percent)
+```
+
+#### Validation
+```{r v26, echo=FALSE}
+taux <- merge(hds, sds, by.x="id", by.y="athlosid")
+kable(as.table(flat_table(taux, 2, 3, show.values=T)))
+```
+
+
+
+
+<!--- ################## Save harmonised datasets ###################-->
+```{r s26, echo=FALSE}
+load("UBCoS_g2_W6.rdata")
+UBCoS_g2_W6 <- full_join(UBCoS_g2_w6, hds, by="id", all=TRUE)
+#save(UBCoS_g2_w6, file="UBCoS_g2_w6.rdata")
+
+mds <- hds
+mds[[2]][mds[[2]] %in% c(991:999)] <- NA
+mds[[2]] <- labelled(mds[[2]], labels = m_label)
+load("UBCoS_m_g2_w6.rdata")
+UBCoS_m_g2_w6 <- full_join(UBCoS_m_g2_w6, mds, by="id", all=TRUE)
+#save(UBCoS_m_g2_w6, file="UBCoS_m_g2_w6.rdata")
+
+rm(list = c("hds", "sds", "mds"))
+```
+
+
+
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+<!-- ########################################################## --> 
+
+
+## Validation accross waves
+
+The validation consists of checking whether each participant did not change sex. If result is equal to 0 then nobody has changed.
+
+**R script**
+```{r vv}
+# For 1st generation:
+list_df <- list(tibble(id= UBCoS_m_g1_w1$id, sex1=UBCoS_m_g1_w1$sex),
+                tibble(id= UBCoS_m_g1_w2$id, sex2=UBCoS_m_g1_w2$sex),
+                tibble(id= UBCoS_m_g1_w3$id, sex3=UBCoS_m_g1_w3$sex), 
+                tibble(id= UBCoS_m_g1_w4$id, sex4=UBCoS_m_g1_w4$sex),
+                tibble(id= UBCoS_m_g1_w5$id, sex5=UBCoS_m_g1_w5$sex), 
+                tibble(id= UBCoS_m_g1_w6$id, sex6=UBCoS_m_g1_w6$sex))
+MyMerge <- function(x, y){
+  df <- full_join(x, y, by= "id")
+#  rownames(df)  <- df$Row.names
+#  df$Row.names  <- NULL    
+  return(df)
+}
+new.df <- Reduce(MyMerge, list_df)
+ll <- lapply( 1:length(new.df$id), function(x) var(as.numeric(new.df[x,2:7]), na.rm=T)) # Variance is used to measure change.
+new.df$var <- as.numeric(ll)
+sum(new.df$var, na.rm = T)
+
+# For 2nd generation:**
+list_df <- list(tibble(id= UBCoS_m_g2_w1$id, sex1=UBCoS_m_g2_w1$sex), 
+                tibble(id= UBCoS_m_g2_w2$id, sex2=UBCoS_m_g2_w2$sex),
+                tibble(id= UBCoS_m_g2_w3$id, sex3=UBCoS_m_g2_w3$sex), 
+                tibble(id= UBCoS_m_g2_w4$id, sex4=UBCoS_m_g2_w4$sex),
+                tibble(id= UBCoS_m_g2_w5$id, sex5=UBCoS_m_g2_w5$sex), 
+                tibble(id= UBCoS_m_g2_w6$id, sex6=UBCoS_m_g2_w6$sex))
+
+new.df <- Reduce(MyMerge, list_df)
+ll <- lapply( 1:length(new.df$id), function(x) var(as.numeric(new.df[x,2:7]), na.rm=T)) # Variance is used to measure change.
+new.df$var <- as.numeric(ll)
+sum(new.df$var, na.rm = T)
+```
+
+# Quality estimation
+[Comments on the quality of the new harmonised variable.]

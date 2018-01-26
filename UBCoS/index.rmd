@@ -1,0 +1,84 @@
+---
+title: "General Information"
+author: "Albert Sanchez-Niubo, Anna Goodman and Ilona Koupil"
+date: "`r Sys.Date()`"
+---
+
+The Uppsala Birth Cohort Multigeneration Study (UBCoS), was established in 2004 at the Centre for Health Equity Studies -CHESS- (Stockholm University and Karolinska Institutet) by combining existing data on a representative and well-defined cohort of 14,192 males and females born in Uppsala from 1915 to 1929 with information on descendants of the original cohort members obtained from routine data registers. Concretely, for the ATHLOS project, two cohorts were collected:
+
+1. Participants from the 1st generation born from 1915 to 1929 and their partners.
+2. Descendants of the 1st generation and their partners.
+
+Due to some restrictions to use UBCoS data, both harmonisation and analysis have been conducted at their institution in Stockholm. Stata source dataset was prepared by Anna Goodman and Ilona Koupil in August 30th 2017, according to the ATHLOS DataSchema. The Stata code which was created to generate the Stata source dataset is placed at CHESS and visiting researchers from the ATHLOS Consortium have access to. Albert Sanchez-Niubo visited CHESS institution in the fall 2017 to prepare the Rmarkdown files and produce the present harmonisation report.
+
+The following R script was done to separate the Stata dataset into different datasets in two populations, 1st and 2nd generation, and each population in six waves according to the access of register data from census in 1960, 1970, 1980 and 1990, and the Database on Education, Income and Employment of Statistics Sweden (LOUISE) register accessed in 2000 and 2008.
+
+```{r setup, include=FALSE}
+#source("setup_ubcos.r")
+```
+
+*R script*
+```{r show, eval = FALSE, cache = FALSE}
+# Stata source dataset is read and loaded in R with name object 'db'
+
+# Names of variables to include in each wave were collected as follows:
+namesW1 <- names(db[,c(1,6:11,12,18,24,28,38,53,54,60,61,67,68,74,75,81,82,88,89,95,96)])
+namesW2 <- names(db[,c(1,6:11,13,19,25,29,33,39,45,49,53,54,55,60,61,62,67,68,69,74,75,76,81,82,83,88,89,90,95,96,97, 102:104, 117:119, 132:134, 147:149, 162:164)])
+namesW3 <- names(db[, c(1,6:11,14,20,26,40,44,53:54,56,60:61,63,67:68,70,74:75,77,81:82,84,88:89,91,95:96,98, 105:107, 120:122, 135:137, 150:152, 165:167)])
+namesW4 <- names(db[, c(1,6:11,15,21,27,30,34,35,41,46,50,53:54,57,60:61,64,67:68,71,74:75,78,81:82,85,88:89,92,95:96,99, 108:110, 123:125, 138:140, 153:155, 168:170)])
+namesW5 <- names(db[, c(1,6:11,16,22,31,36,42,47,51,53:54,58,60:61,65,67:68,72,74:75,79,81:82,86,88:89,93,95:96,100, 111:113, 126:128, 141:143, 156:158, 171:173)])
+namesW6 <- names(db[, c(1,6:11,17,23,32,37,43,48,52,53:54,59,60:61,66,67:68,73,74:75,80,81:82,87,88:89,94,95:96,101, 114:116, 129:131, 144:146, 159:161, 174:176)])
+
+
+# First generation (G1). Variable "ubcos1" refers to the participant in G1, and "ubcos1partner" to the partner of the participant in G1.
+
+ubcosG1W1 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW1,"ubcos1","ubcos1partner")]
+ubcosG1W2 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW2,"ubcos1","ubcos1partner")]
+ubcosG1W3 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW3,"ubcos1","ubcos1partner")]
+ubcosG1W4 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW4,"ubcos1","ubcos1partner")]
+ubcosG1W5 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW5,"ubcos1","ubcos1partner")]
+ubcosG1W6 <- db[ which(db$ubcos1==1 | db$ubcos1partner==1), c(namesW6,"ubcos1","ubcos1partner")]
+
+# Second generation (G2). Variable "ubcos2" refers to the participant in G2, and "ubcos2partner" to the partner of the participant in G2.
+ubcosG2W1 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW1,"ubcos2","ubcos2partner")]
+ubcosG2W2 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW2,"ubcos2","ubcos2partner")]
+ubcosG2W3 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW3,"ubcos2","ubcos2partner")]
+ubcosG2W4 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW4,"ubcos2","ubcos2partner")]
+ubcosG2W5 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW5,"ubcos2","ubcos2partner")]
+ubcosG2W6 <- db[ which(db$ubcos2==1 | db$ubcos2partner==1), c(namesW6,"ubcos2","ubcos2partner")]
+
+# Not applicable participants were removed according to the following:
+# int_status == 0 'not yet born/inappropriate'.
+# int_status == 4 'no respond, died in previous waves'.
+# int_status == 6 'no respond, emigrated in previous waves'.
+# Individuals who died in previous waves even though some information was collected and was kept in that wave.
+
+ubcosG1W1 <- ubcosG1W1[!ubcosG1W1$int_status1960 %in% c(0,4,6),]  
+ubcosG1W2 <- ubcosG1W2[!ubcosG1W2$int_status1970 %in% c(0,4,6),]  
+ubcosG1W2 <- ubcosG1W2[ is.na(ubcosG1W2$date_death) | ubcosG1W2$date_death >= ymd("19601101"),]  
+ubcosG1W3 <- ubcosG1W3[!ubcosG1W3$int_status1980 %in% c(0,4,6),]  
+ubcosG1W3 <- ubcosG1W3[ is.na(ubcosG1W3$date_death) | ubcosG1W3$date_death >= ymd("19701101"),]  
+ubcosG1W4 <- ubcosG1W4[!ubcosG1W4$int_status1990 %in% c(0,4,6),]  
+ubcosG1W4 <- ubcosG1W4[ is.na(ubcosG1W4$date_death) | ubcosG1W4$date_death >= ymd("19800915"),]  
+ubcosG1W5 <- ubcosG1W5[!ubcosG1W5$int_status2000 %in% c(0,4,6),]  
+ubcosG1W5 <- ubcosG1W5[ is.na(ubcosG1W5$date_death) | ubcosG1W5$date_death >= ymd("19901101"),]  
+ubcosG1W6 <- ubcosG1W6[!ubcosG1W6$int_status2008 %in% c(0,4,6),]
+ubcosG1W6 <- ubcosG1W6[ is.na(ubcosG1W6$date_death) | ubcosG1W6$date_death >= ymd("20001101"),]  
+
+ubcosG2W1 <- ubcosG2W1[!ubcosG2W1$int_status1960 %in% c(0,4,6),]  
+ubcosG2W2 <- ubcosG2W2[!ubcosG2W2$int_status1970 %in% c(0,4,6),]  
+ubcosG2W2 <- ubcosG2W2[ is.na(ubcosG2W2$date_death) | ubcosG2W2$date_death >= ymd("19601101"),]  
+ubcosG2W3 <- ubcosG2W3[!ubcosG2W3$int_status1980 %in% c(0,4,6),]  
+ubcosG2W3 <- ubcosG2W3[ is.na(ubcosG2W3$date_death) | ubcosG2W3$date_death >= ymd("19701101"),]  
+ubcosG2W4 <- ubcosG2W4[!ubcosG2W4$int_status1990 %in% c(0,4,6),]  
+ubcosG2W4 <- ubcosG2W4[ is.na(ubcosG2W4$date_death) | ubcosG2W4$date_death >= ymd("19800915"),]  
+ubcosG2W5 <- ubcosG2W5[!ubcosG2W5$int_status2000 %in% c(0,4,6),]  
+ubcosG2W5 <- ubcosG2W5[ is.na(ubcosG2W5$date_death) | ubcosG2W5$date_death >= ymd("19901101"),]  
+ubcosG2W6 <- ubcosG2W6[!ubcosG2W6$int_status2008 %in% c(0,4,6),]
+ubcosG2W6 <- ubcosG2W6[ is.na(ubcosG2W6$date_death) | ubcosG2W6$date_death >= ymd("20001101"),]  
+```
+
+Datasets from "ubcosG1W1" to "ubcosG2W6" are used in the Rmarkdown files to create the new harmonised variables.
+
+The other top menu are the different areas of information which include the harmonisation process for each DataSchema variable available in the UBCoS study.
+
