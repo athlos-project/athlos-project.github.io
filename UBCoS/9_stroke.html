@@ -1,0 +1,2993 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Stroke</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5,h6",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">UBCoS Harmonisation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Sociodemog. &amp; Econ.
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_birth.html">Birth</a>
+    </li>
+    <li>
+      <a href="2_age.html">Age</a>
+    </li>
+    <li>
+      <a href="3_sex.html">Sex</a>
+    </li>
+    <li>
+      <a href="4_marital_status.html">Marital status</a>
+    </li>
+    <li>
+      <a href="5_education.html">Education</a>
+    </li>
+    <li>
+      <a href="6_living_alone.html">Living alone</a>
+    </li>
+    <li>
+      <a href="9_income.html">Wealth</a>
+    </li>
+    <li>
+      <a href="10_employed.html">Employed</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Life expectancy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_death.html">Death</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Diseases
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_h_diabetes.html">Diabetes</a>
+    </li>
+    <li>
+      <a href="2_h_asthma.html">Asthma</a>
+    </li>
+    <li>
+      <a href="3_cpd.html">CPD</a>
+    </li>
+    <li>
+      <a href="5_hypertension.html">Hypertension</a>
+    </li>
+    <li>
+      <a href="6_arthritis.html">Arthritis</a>
+    </li>
+    <li>
+      <a href="7_angina.html">Angina</a>
+    </li>
+    <li>
+      <a href="8_mi_ha.html">MI HA</a>
+    </li>
+    <li>
+      <a href="9_stroke.html">Stroke</a>
+    </li>
+    <li>
+      <a href="10_cvd.html">CVD</a>
+    </li>
+    <li>
+      <a href="11_cvd_hard.html">CVD hard</a>
+    </li>
+    <li>
+      <a href="13_cancer.html">Cancer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Stroke</h1>
+
+</div>
+
+
+<!-- ########################################################## -->
+<!-- # Installation, loading packages -->
+<!-- **R script:** -->
+<!-- ########################################################## -->
+<div id="description-of-dataschema-variable" class="section level1">
+<h1><span class="header-section-number">1</span> Description of DataSchema variable</h1>
+<p>Two variables are created: <code>stroke</code>and <code>stroke_age</code>:</p>
+<ul>
+<li>Short name: <code>stroke</code></li>
+<li>Variable label: <code>Stroke</code></li>
+<li>Variable description: <code>First episode of stroke in the last observed period of time.</code></li>
+<li>Domain: <code>Diseases</code></li>
+<li>Value type: <code>categorical</code></li>
+<li>Category coding:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Code</strong></th>
+<th><strong>Category Label</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Short name: <code>stroke_age</code></li>
+<li>Variable label: <code>Age of stroke</code></li>
+<li>Variable description: <code>Age of first episode of stroke in the last observed period of time.</code></li>
+<li>Domain: <code>Diseases</code></li>
+<li><p>Value type: <code>continuous</code></p></li>
+<li><p>Category missings in both variables:</p></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Code</strong></th>
+<th><strong>Category Label</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>991</td>
+<td>CAPI/interviewer error</td>
+</tr>
+<tr class="even">
+<td>992</td>
+<td>Impute</td>
+</tr>
+<tr class="odd">
+<td>993</td>
+<td>Disable to measure</td>
+</tr>
+<tr class="even">
+<td>994</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>995</td>
+<td>Does not answer</td>
+</tr>
+<tr class="even">
+<td>996</td>
+<td>Not attempt/not done</td>
+</tr>
+<tr class="odd">
+<td>997</td>
+<td>Refuse</td>
+</tr>
+<tr class="even">
+<td>998</td>
+<td>Do not know</td>
+</tr>
+<tr class="odd">
+<td>999</td>
+<td>Missing</td>
+</tr>
+</tbody>
+</table>
+<!-- ########################################################## -->
+</div>
+<div id="data-process" class="section level1">
+<h1><span class="header-section-number">2</span> Data process</h1>
+<div id="uppsala-1st-generation-cohort" class="section level2">
+<h2><span class="header-section-number">2.1</span> Uppsala 1st generation cohort</h2>
+<div id="wave-1" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Wave 1</h3>
+<p>No information was registered.</p>
+</div>
+<div id="wave-2" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Wave 2</h3>
+<div id="study-specific-variable-description" class="section level4">
+<h4><span class="header-section-number">2.1.2.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1970</code></li>
+<li>Table name: <code>ubcosG1W2</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 1970</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">20696</td>
+<td align="left"><none></td>
+<td align="right">99.82</td>
+<td align="right">99.82</td>
+<td align="right">99.82</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">37</td>
+<td align="left"><none></td>
+<td align="right">0.18</td>
+<td align="right">0.18</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f121-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1970</code></li>
+<li>Table name: <code>ubcosG1W2</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 1970</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f122-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm" class="section level4">
+<h4><span class="header-section-number">2.1.2.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 1970, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 1970, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable" class="section level4">
+<h4><span class="header-section-number">2.1.2.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">20696</td>
+<td align="right">99.82</td>
+<td align="right">99.82</td>
+<td align="right">99.82</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">37</td>
+<td align="right">0.18</td>
+<td align="right">0.18</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d12-1.png" width="672" /><img src="9_stroke_files/figure-html/d12-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-3" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Wave 3</h3>
+<div id="study-specific-variable-description-1" class="section level4">
+<h4><span class="header-section-number">2.1.3.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1980</code></li>
+<li>Table name: <code>ubcosG1W3</code></li>
+<li>Description: <code>First diagnosis of stroke before the 15th September 1980</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">20061</td>
+<td align="left"><none></td>
+<td align="right">98.64</td>
+<td align="right">98.64</td>
+<td align="right">98.64</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">277</td>
+<td align="left"><none></td>
+<td align="right">1.36</td>
+<td align="right">1.36</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f131-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1980</code></li>
+<li>Table name: <code>ubcosG1W3</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 15th September 1980</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f132-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-1" class="section level4">
+<h4><span class="header-section-number">2.1.3.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 15th September 1980, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 15th September 1980, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-1" class="section level4">
+<h4><span class="header-section-number">2.1.3.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">20061</td>
+<td align="right">98.64</td>
+<td align="right">98.64</td>
+<td align="right">98.64</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">277</td>
+<td align="right">1.36</td>
+<td align="right">1.36</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d13-1.png" width="672" /><img src="9_stroke_files/figure-html/d13-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-4" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Wave 4</h3>
+<div id="study-specific-variable-description-2" class="section level4">
+<h4><span class="header-section-number">2.1.4.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1990</code></li>
+<li>Table name: <code>ubcosG1W4</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 1990</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">18231</td>
+<td align="left"><none></td>
+<td align="right">95.52</td>
+<td align="right">95.52</td>
+<td align="right">95.52</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">856</td>
+<td align="left"><none></td>
+<td align="right">4.48</td>
+<td align="right">4.48</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f141-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1990</code></li>
+<li>Table name: <code>ubcosG1W4</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 1990</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f142-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-2" class="section level4">
+<h4><span class="header-section-number">2.1.4.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 1990, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 1990, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-2" class="section level4">
+<h4><span class="header-section-number">2.1.4.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">18231</td>
+<td align="right">95.52</td>
+<td align="right">95.52</td>
+<td align="right">95.52</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">856</td>
+<td align="right">4.48</td>
+<td align="right">4.48</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d14-1.png" width="672" /><img src="9_stroke_files/figure-html/d14-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-5" class="section level3">
+<h3><span class="header-section-number">2.1.5</span> Wave 5</h3>
+<div id="study-specific-variable-description-3" class="section level4">
+<h4><span class="header-section-number">2.1.5.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke2000</code></li>
+<li>Table name: <code>ubcosG1W5</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 2000</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">14944</td>
+<td align="left"><none></td>
+<td align="right">88.45</td>
+<td align="right">88.45</td>
+<td align="right">88.45</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">1952</td>
+<td align="left"><none></td>
+<td align="right">11.55</td>
+<td align="right">11.55</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f151-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage2000</code></li>
+<li>Table name: <code>ubcosG1W5</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 2000</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f152-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-3" class="section level4">
+<h4><span class="header-section-number">2.1.5.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 2000, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 2000, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-3" class="section level4">
+<h4><span class="header-section-number">2.1.5.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">14944</td>
+<td align="right">88.45</td>
+<td align="right">88.45</td>
+<td align="right">88.45</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">1952</td>
+<td align="right">11.55</td>
+<td align="right">11.55</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d15-1.png" width="672" /><img src="9_stroke_files/figure-html/d15-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-6" class="section level3">
+<h3><span class="header-section-number">2.1.6</span> Wave 6</h3>
+<div id="study-specific-variable-description-4" class="section level4">
+<h4><span class="header-section-number">2.1.6.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke2008</code></li>
+<li>Table name: <code>ubcosG1W6</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 2008</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">10561</td>
+<td align="left"><none></td>
+<td align="right">82.51</td>
+<td align="right">82.51</td>
+<td align="right">82.51</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">2239</td>
+<td align="left"><none></td>
+<td align="right">17.49</td>
+<td align="right">17.49</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f161-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage2008</code></li>
+<li>Table name: <code>ubcosG1W6</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 2008</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f162-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-4" class="section level4">
+<h4><span class="header-section-number">2.1.6.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 31st December 2008, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 31st December 2008, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-4" class="section level4">
+<h4><span class="header-section-number">2.1.6.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">10561</td>
+<td align="right">82.51</td>
+<td align="right">82.51</td>
+<td align="right">82.51</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">2239</td>
+<td align="right">17.49</td>
+<td align="right">17.49</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d16-1.png" width="672" /><img src="9_stroke_files/figure-html/d16-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+<!-- ###################################################################################################### -->
+<!-- ###################################################################################################### -->
+</div>
+</div>
+</div>
+<div id="uppsala-2nd-generation-cohort" class="section level2">
+<h2><span class="header-section-number">2.2</span> Uppsala 2nd generation cohort</h2>
+<div id="wave-1-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Wave 1</h3>
+<p>No information was registered.</p>
+</div>
+<div id="wave-2-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Wave 2</h3>
+<div id="study-specific-variable-description-5" class="section level4">
+<h4><span class="header-section-number">2.2.2.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1970</code></li>
+<li>Table name: <code>ubcosG2W2</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 1970</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">38456</td>
+<td align="left"><none></td>
+<td align="right">99.99</td>
+<td align="right">99.99</td>
+<td align="right">99.99</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">2</td>
+<td align="left"><none></td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f221-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1970</code></li>
+<li>Table name: <code>ubcosG2W2</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 1970</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f222-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-5" class="section level4">
+<h4><span class="header-section-number">2.2.2.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 1970, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 1970, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-5" class="section level4">
+<h4><span class="header-section-number">2.2.2.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">38456</td>
+<td align="right">99.99</td>
+<td align="right">99.99</td>
+<td align="right">99.99</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d22-1.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-3-1" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Wave 3</h3>
+<div id="study-specific-variable-description-6" class="section level4">
+<h4><span class="header-section-number">2.2.3.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1980</code></li>
+<li>Table name: <code>ubcosG2W3</code></li>
+<li>Description: <code>First diagnosis of stroke before the 15th September 1980</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">38709</td>
+<td align="left"><none></td>
+<td align="right">99.9</td>
+<td align="right">99.9</td>
+<td align="right">99.9</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">40</td>
+<td align="left"><none></td>
+<td align="right">0.1</td>
+<td align="right">0.1</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.0</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f231-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1980</code></li>
+<li>Table name: <code>ubcosG2W3</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 15th September 1980</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f232-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-6" class="section level4">
+<h4><span class="header-section-number">2.2.3.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 15th September 1980, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 15th September 1980, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-6" class="section level4">
+<h4><span class="header-section-number">2.2.3.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">38709</td>
+<td align="right">99.9</td>
+<td align="right">99.9</td>
+<td align="right">99.9</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">40</td>
+<td align="right">0.1</td>
+<td align="right">0.1</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">100.0</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d23-1.png" width="672" /><img src="9_stroke_files/figure-html/d23-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-4-1" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Wave 4</h3>
+<div id="study-specific-variable-description-7" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke1990</code></li>
+<li>Table name: <code>ubcosG2W4</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 1990</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">38280</td>
+<td align="left"><none></td>
+<td align="right">99.78</td>
+<td align="right">99.78</td>
+<td align="right">99.78</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">86</td>
+<td align="left"><none></td>
+<td align="right">0.22</td>
+<td align="right">0.22</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f241-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage1990</code></li>
+<li>Table name: <code>ubcosG2W4</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 1990</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f242-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-7" class="section level4">
+<h4><span class="header-section-number">2.2.4.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 1990, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 1990, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-7" class="section level4">
+<h4><span class="header-section-number">2.2.4.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">38280</td>
+<td align="right">99.78</td>
+<td align="right">99.78</td>
+<td align="right">99.78</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">86</td>
+<td align="right">0.22</td>
+<td align="right">0.22</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d24-1.png" width="672" /><img src="9_stroke_files/figure-html/d24-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-5-1" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Wave 5</h3>
+<div id="study-specific-variable-description-8" class="section level4">
+<h4><span class="header-section-number">2.2.5.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke2000</code></li>
+<li>Table name: <code>ubcosG2W5</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 2000</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">37547</td>
+<td align="left"><none></td>
+<td align="right">99.14</td>
+<td align="right">99.14</td>
+<td align="right">99.14</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">326</td>
+<td align="left"><none></td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f251-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage2000</code></li>
+<li>Table name: <code>ubcosG2W5</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 2000</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f252-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-8" class="section level4">
+<h4><span class="header-section-number">2.2.5.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 1st November 2000, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 1st November 2000, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-8" class="section level4">
+<h4><span class="header-section-number">2.2.5.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">37547</td>
+<td align="right">99.14</td>
+<td align="right">99.14</td>
+<td align="right">99.14</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">326</td>
+<td align="right">0.86</td>
+<td align="right">0.86</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d25-1.png" width="672" /><img src="9_stroke_files/figure-html/d25-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-6-1" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> Wave 6</h3>
+<div id="study-specific-variable-description-9" class="section level4">
+<h4><span class="header-section-number">2.2.6.1</span> Study-specific variable description</h4>
+<p>Two variables are taken from the UBCoS dataset:</p>
+<ul>
+<li>Name: <code>stroke2008</code></li>
+<li>Table name: <code>ubcosG2W6</code></li>
+<li>Description: <code>First diagnosis of stroke before the 1st November 2008</code></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="left">label</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">35966</td>
+<td align="left"><none></td>
+<td align="right">97.68</td>
+<td align="right">97.68</td>
+<td align="right">97.68</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">853</td>
+<td align="left"><none></td>
+<td align="right">2.32</td>
+<td align="right">2.32</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="left"><none></td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/f261-1.png" width="672" /></p>
+<ul>
+<li>Name: <code>stroke_firstage2008</code></li>
+<li>Table name: <code>ubcosG2W6</code></li>
+<li>Label: <code>Age of first diagnosis of stroke before the 1st November 2008</code></li>
+<li>Description:</li>
+</ul>
+<p><img src="9_stroke_files/figure-html/f262-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-9" class="section level4">
+<h4><span class="header-section-number">2.2.6.2</span> Harmonisation algorithm</h4>
+<p>For the variable <code>stroke</code>, value 0 is assigned when date of first diagnosis of stroke is later than 31st December 2008, the approximate date of the census registry, or never, and value 1 when prior to that date.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">stroke=</span>sds[[<span class="dv">4</span>]])</code></pre></div>
+<p>For the variable <code>stroke_age</code>, the same age is assigned when the first diagnosis of stroke is before than 31st December 2008, otherwise the value 994 (not applicable) is assigned.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds$stroke_age &lt;-<span class="st"> </span>sds[[<span class="dv">3</span>]]
+hds[hds$stroke !=<span class="st"> </span><span class="dv">1</span>,]$stroke_age &lt;-<span class="st"> </span><span class="dv">994</span></code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-9" class="section level4">
+<h4><span class="header-section-number">2.2.6.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">35966</td>
+<td align="right">97.68</td>
+<td align="right">97.68</td>
+<td align="right">97.68</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">853</td>
+<td align="right">2.32</td>
+<td align="right">2.32</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="9_stroke_files/figure-html/d26-1.png" width="672" /><img src="9_stroke_files/figure-html/d26-2.png" width="672" /></p>
+<!---###### Validation
+
+-->
+<!--- ################## Save harmonised datasets ###################-->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+</div>
+</div>
+</div>
+<div id="validation-accross-waves" class="section level2">
+<h2><span class="header-section-number">2.3</span> Validation accross waves</h2>
+<p>The validation consists to check the variable accross waves.</p>
+<p><strong>R script</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For 1st generation:</span>
+list_df &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w2$id, <span class="dt">hdiab2=</span>UBCoS_m_g1_w2$stroke, <span class="dt">adiab2=</span>UBCoS_m_g1_w2$stroke_age),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w3$id, <span class="dt">hdiab3=</span>UBCoS_m_g1_w3$stroke, <span class="dt">adiab3=</span>UBCoS_m_g1_w3$stroke_age), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w4$id, <span class="dt">hdiab4=</span>UBCoS_m_g1_w4$stroke, <span class="dt">adiab4=</span>UBCoS_m_g1_w4$stroke_age),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w5$id, <span class="dt">hdiab5=</span>UBCoS_m_g1_w5$stroke, <span class="dt">adiab5=</span>UBCoS_m_g1_w5$stroke_age), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w6$id, <span class="dt">hdiab6=</span>UBCoS_m_g1_w6$stroke, <span class="dt">adiab6=</span>UBCoS_m_g1_w6$stroke_age))
+MyMerge &lt;-<span class="st"> </span>function(x, y){
+  df &lt;-<span class="st"> </span><span class="kw">full_join</span>(x, y, <span class="dt">by=</span> <span class="st">&quot;id&quot;</span>)
+  <span class="kw">return</span>(df)
+}
+new.df &lt;-<span class="st"> </span><span class="kw">Reduce</span>(MyMerge, list_df)
+
+v.ndf &lt;-<span class="st"> </span><span class="kw">with</span>(new.df, <span class="kw">paste</span>(hdiab2, hdiab3, hdiab4, hdiab5, hdiab6,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>))
+<span class="kw">kable</span>(<span class="kw">frq</span>(v.ndf)[[<span class="dv">1</span>]][,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)])</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">00000</td>
+<td align="right">9771</td>
+<td align="right">46.92</td>
+</tr>
+<tr class="even">
+<td align="left">00001</td>
+<td align="right">1646</td>
+<td align="right">7.90</td>
+</tr>
+<tr class="odd">
+<td align="left">0000NA</td>
+<td align="right">3001</td>
+<td align="right">14.41</td>
+</tr>
+<tr class="even">
+<td align="left">00010</td>
+<td align="right">539</td>
+<td align="right">2.59</td>
+</tr>
+<tr class="odd">
+<td align="left">00011</td>
+<td align="right">471</td>
+<td align="right">2.26</td>
+</tr>
+<tr class="even">
+<td align="left">0001NA</td>
+<td align="right">703</td>
+<td align="right">3.38</td>
+</tr>
+<tr class="odd">
+<td align="left">000NA0</td>
+<td align="right">55</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="even">
+<td align="left">000NANA</td>
+<td align="right">1869</td>
+<td align="right">8.97</td>
+</tr>
+<tr class="odd">
+<td align="left">00100</td>
+<td align="right">88</td>
+<td align="right">0.42</td>
+</tr>
+<tr class="even">
+<td align="left">00101</td>
+<td align="right">58</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="odd">
+<td align="left">0010NA</td>
+<td align="right">146</td>
+<td align="right">0.70</td>
+</tr>
+<tr class="even">
+<td align="left">00110</td>
+<td align="right">37</td>
+<td align="right">0.18</td>
+</tr>
+<tr class="odd">
+<td align="left">00111</td>
+<td align="right">41</td>
+<td align="right">0.20</td>
+</tr>
+<tr class="even">
+<td align="left">0011NA</td>
+<td align="right">126</td>
+<td align="right">0.61</td>
+</tr>
+<tr class="odd">
+<td align="left">001NANA</td>
+<td align="right">305</td>
+<td align="right">1.46</td>
+</tr>
+<tr class="even">
+<td align="left">00NA00</td>
+<td align="right">9</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="odd">
+<td align="left">00NA0NA</td>
+<td align="right">51</td>
+<td align="right">0.24</td>
+</tr>
+<tr class="even">
+<td align="left">00NANANA</td>
+<td align="right">1037</td>
+<td align="right">4.98</td>
+</tr>
+<tr class="odd">
+<td align="left">01000</td>
+<td align="right">27</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="even">
+<td align="left">01001</td>
+<td align="right">12</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="odd">
+<td align="left">0100NA</td>
+<td align="right">18</td>
+<td align="right">0.09</td>
+</tr>
+<tr class="even">
+<td align="left">01010</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">01011</td>
+<td align="right">6</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">0101NA</td>
+<td align="right">15</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="odd">
+<td align="left">010NANA</td>
+<td align="right">47</td>
+<td align="right">0.23</td>
+</tr>
+<tr class="even">
+<td align="left">01100</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">0110NA</td>
+<td align="right">9</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">01111</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">0111NA</td>
+<td align="right">7</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">011NANA</td>
+<td align="right">32</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="odd">
+<td align="left">01NANANA</td>
+<td align="right">90</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="even">
+<td align="left">0NA00NA</td>
+<td align="right">4</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">0NA0NA0</td>
+<td align="right">27</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="even">
+<td align="left">0NA0NANA</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">0NANANANA</td>
+<td align="right">439</td>
+<td align="right">2.11</td>
+</tr>
+<tr class="even">
+<td align="left">10000</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">10001</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">1000NA</td>
+<td align="right">5</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">10011</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">100NANA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">1011NA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">10NANANA</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">1100NA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">111NANA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">11NANANA</td>
+<td align="right">5</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">1NANANANA</td>
+<td align="right">15</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="odd">
+<td align="left">NA00NANA</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">NA0NA0NA</td>
+<td align="right">91</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f.ascending &lt;-<span class="st"> </span>function(v) {  <span class="co"># return true or false</span>
+  <span class="kw">return</span>(<span class="kw">all</span>(<span class="kw">diff</span>(<span class="kw">na.omit</span>(v)) &gt;=<span class="st"> </span><span class="dv">0</span>))
+}
+
+adiab &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(new.df[, <span class="kw">c</span>(<span class="st">&quot;adiab2&quot;</span>, <span class="st">&quot;adiab3&quot;</span>, <span class="st">&quot;adiab4&quot;</span>, <span class="st">&quot;adiab5&quot;</span>, <span class="st">&quot;adiab6&quot;</span>)])
+tf &lt;-<span class="st"> </span><span class="kw">apply</span>(adiab, <span class="dv">1</span>, f.ascending)
+<span class="kw">table</span>(tf)</code></pre></div>
+<pre><code>## tf
+##  TRUE 
+## 20826</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For 2nd generation:**</span>
+list_df &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w2$id, <span class="dt">hdiab2=</span>UBCoS_m_g2_w2$stroke, <span class="dt">adiab2=</span>UBCoS_m_g2_w2$stroke_age),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w3$id, <span class="dt">hdiab3=</span>UBCoS_m_g2_w3$stroke, <span class="dt">adiab3=</span>UBCoS_m_g2_w3$stroke_age), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w4$id, <span class="dt">hdiab4=</span>UBCoS_m_g2_w4$stroke, <span class="dt">adiab4=</span>UBCoS_m_g2_w4$stroke_age),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w5$id, <span class="dt">hdiab5=</span>UBCoS_m_g2_w5$stroke, <span class="dt">adiab5=</span>UBCoS_m_g2_w5$stroke_age), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w6$id, <span class="dt">hdiab6=</span>UBCoS_m_g2_w6$stroke, <span class="dt">adiab6=</span>UBCoS_m_g2_w6$stroke_age))
+
+new.df &lt;-<span class="st"> </span><span class="kw">Reduce</span>(MyMerge, list_df)
+v.ndf &lt;-<span class="st"> </span><span class="kw">with</span>(new.df, <span class="kw">paste</span>(hdiab2, hdiab3, hdiab4, hdiab5, hdiab6,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>))
+<span class="kw">kable</span>(<span class="kw">frq</span>(v.ndf)[[<span class="dv">1</span>]][,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)])</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">00000</td>
+<td align="right">34696</td>
+<td align="right">89.01</td>
+</tr>
+<tr class="even">
+<td align="left">00001</td>
+<td align="right">741</td>
+<td align="right">1.90</td>
+</tr>
+<tr class="odd">
+<td align="left">0000NA</td>
+<td align="right">1173</td>
+<td align="right">3.01</td>
+</tr>
+<tr class="even">
+<td align="left">00010</td>
+<td align="right">178</td>
+<td align="right">0.46</td>
+</tr>
+<tr class="odd">
+<td align="left">00011</td>
+<td align="right">92</td>
+<td align="right">0.24</td>
+</tr>
+<tr class="even">
+<td align="left">0001NA</td>
+<td align="right">38</td>
+<td align="right">0.10</td>
+</tr>
+<tr class="odd">
+<td align="left">000NA0</td>
+<td align="right">438</td>
+<td align="right">1.12</td>
+</tr>
+<tr class="even">
+<td align="left">000NANA</td>
+<td align="right">292</td>
+<td align="right">0.75</td>
+</tr>
+<tr class="odd">
+<td align="left">00100</td>
+<td align="right">39</td>
+<td align="right">0.10</td>
+</tr>
+<tr class="even">
+<td align="left">00101</td>
+<td align="right">7</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">0010NA</td>
+<td align="right">7</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">00110</td>
+<td align="right">4</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">00111</td>
+<td align="right">6</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">0011NA</td>
+<td align="right">5</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">001NANA</td>
+<td align="right">16</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">00NA00</td>
+<td align="right">4</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">00NA0NA</td>
+<td align="right">329</td>
+<td align="right">0.84</td>
+</tr>
+<tr class="even">
+<td align="left">00NANANA</td>
+<td align="right">160</td>
+<td align="right">0.41</td>
+</tr>
+<tr class="odd">
+<td align="left">01000</td>
+<td align="right">25</td>
+<td align="right">0.06</td>
+</tr>
+<tr class="even">
+<td align="left">01001</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">0100NA</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">01011</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">01100</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">01101</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">01NA0NA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">01NANANA</td>
+<td align="right">5</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">0NA00NA</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">0NA0NA0</td>
+<td align="right">77</td>
+<td align="right">0.20</td>
+</tr>
+<tr class="odd">
+<td align="left">0NA0NANA</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">0NANANANA</td>
+<td align="right">109</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="odd">
+<td align="left">10000</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">NA0000</td>
+<td align="right">463</td>
+<td align="right">1.19</td>
+</tr>
+<tr class="odd">
+<td align="left">NA000NA</td>
+<td align="right">11</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">NA001NA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA00NA0</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">NA00NANA</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NA0NA0NA</td>
+<td align="right">3</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">NA0NANANA</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="odd">
+<td align="left">NANA000</td>
+<td align="right">36</td>
+<td align="right">0.09</td>
+</tr>
+<tr class="even">
+<td align="left">NANA001</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">NANA0NA0</td>
+<td align="right">2</td>
+<td align="right">0.01</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">adiab &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(new.df[, <span class="kw">c</span>(<span class="st">&quot;adiab2&quot;</span>, <span class="st">&quot;adiab3&quot;</span>, <span class="st">&quot;adiab4&quot;</span>, <span class="st">&quot;adiab5&quot;</span>, <span class="st">&quot;adiab6&quot;</span>)])
+tf &lt;-<span class="st"> </span><span class="kw">apply</span>(adiab, <span class="dv">1</span>, f.ascending)
+<span class="kw">table</span>(tf)</code></pre></div>
+<pre><code>## tf
+##  TRUE 
+## 38979</code></pre>
+</div>
+</div>
+<div id="quality-estimation" class="section level1">
+<h1><span class="header-section-number">3</span> Quality estimation</h1>
+<p>[Comments on the quality of the new harmonised variable.]</p>
+</div>
+
+<p><em> ATHLOS project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 635316.</em></p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

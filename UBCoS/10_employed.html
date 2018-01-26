@@ -1,0 +1,4602 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Employed</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5,h6",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">UBCoS Harmonisation</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Sociodemog. &amp; Econ.
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_birth.html">Birth</a>
+    </li>
+    <li>
+      <a href="2_age.html">Age</a>
+    </li>
+    <li>
+      <a href="3_sex.html">Sex</a>
+    </li>
+    <li>
+      <a href="4_marital_status.html">Marital status</a>
+    </li>
+    <li>
+      <a href="5_education.html">Education</a>
+    </li>
+    <li>
+      <a href="6_living_alone.html">Living alone</a>
+    </li>
+    <li>
+      <a href="9_income.html">Wealth</a>
+    </li>
+    <li>
+      <a href="10_employed.html">Employed</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Life expectancy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_death.html">Death</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    Diseases
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_h_diabetes.html">Diabetes</a>
+    </li>
+    <li>
+      <a href="2_h_asthma.html">Asthma</a>
+    </li>
+    <li>
+      <a href="3_cpd.html">CPD</a>
+    </li>
+    <li>
+      <a href="5_hypertension.html">Hypertension</a>
+    </li>
+    <li>
+      <a href="6_arthritis.html">Arthritis</a>
+    </li>
+    <li>
+      <a href="7_angina.html">Angina</a>
+    </li>
+    <li>
+      <a href="8_mi_ha.html">MI HA</a>
+    </li>
+    <li>
+      <a href="9_stroke.html">Stroke</a>
+    </li>
+    <li>
+      <a href="10_cvd.html">CVD</a>
+    </li>
+    <li>
+      <a href="11_cvd_hard.html">CVD hard</a>
+    </li>
+    <li>
+      <a href="13_cancer.html">Cancer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Employed</h1>
+
+</div>
+
+
+<!-- ########################################################## -->
+<!-- # Installation, loading packages -->
+<!-- **R script:** -->
+<!-- ########################################################## -->
+<div id="description-of-dataschema-variable" class="section level1">
+<h1><span class="header-section-number">1</span> Description of DataSchema variable</h1>
+<ul>
+<li>Short name: <code>employed</code></li>
+<li>Variable label: <code>Employed</code></li>
+<li>Variable description: <code>Participant is employed</code></li>
+<li>Domain: <code>Socio-demographic and economic characteristics</code></li>
+<li>Value type: <code>categorical</code></li>
+<li>Category coding:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Code</strong></th>
+<th><strong>Category Label</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Category missings:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Code</strong></th>
+<th><strong>Category Label</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>991</td>
+<td>CAPI/interviewer error</td>
+</tr>
+<tr class="even">
+<td>992</td>
+<td>Impute</td>
+</tr>
+<tr class="odd">
+<td>993</td>
+<td>Disable to measure</td>
+</tr>
+<tr class="even">
+<td>994</td>
+<td>Not applicable</td>
+</tr>
+<tr class="odd">
+<td>995</td>
+<td>Does not answer</td>
+</tr>
+<tr class="even">
+<td>996</td>
+<td>Not attempt/not done</td>
+</tr>
+<tr class="odd">
+<td>997</td>
+<td>Refuse</td>
+</tr>
+<tr class="even">
+<td>998</td>
+<td>Do not know</td>
+</tr>
+<tr class="odd">
+<td>999</td>
+<td>Missing</td>
+</tr>
+</tbody>
+</table>
+<!-- ########################################################## -->
+</div>
+<div id="data-process" class="section level1">
+<h1><span class="header-section-number">2</span> Data process</h1>
+<div id="uppsala-1st-generation-cohort" class="section level2">
+<h2><span class="header-section-number">2.1</span> Uppsala 1st generation cohort</h2>
+<div id="wave-1" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Wave 1</h3>
+<div id="study-specific-variable-description" class="section level4">
+<h4><span class="header-section-number">2.1.1.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W1</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">6676</td>
+<td align="right">29.47</td>
+<td align="right">29.47</td>
+<td align="right">29.47</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">12823</td>
+<td align="right">56.60</td>
+<td align="right">56.60</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1921</td>
+<td align="right">8.48</td>
+<td align="right">8.48</td>
+<td align="right">94.55</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1234</td>
+<td align="right">5.45</td>
+<td align="right">5.45</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f11-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm" class="section level4">
+<h4><span class="header-section-number">2.1.1.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable" class="section level4">
+<h4><span class="header-section-number">2.1.1.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">6676</td>
+<td align="right">29.47</td>
+<td align="right">29.47</td>
+<td align="right">29.47</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">12823</td>
+<td align="right">56.60</td>
+<td align="right">56.60</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">86.07</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1921</td>
+<td align="right">8.48</td>
+<td align="right">8.48</td>
+<td align="right">94.55</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1234</td>
+<td align="right">5.45</td>
+<td align="right">5.45</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d11-1.png" width="672" /></p>
+</div>
+<div id="validation" class="section level4">
+<h4><span class="header-section-number">2.1.1.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">6676</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">12823</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1921</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1234</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-2" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Wave 2</h3>
+<div id="study-specific-variable-description-1" class="section level4">
+<h4><span class="header-section-number">2.1.2.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W2</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">4051</td>
+<td align="right">19.54</td>
+<td align="right">19.54</td>
+<td align="right">19.54</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">15831</td>
+<td align="right">76.36</td>
+<td align="right">76.36</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">488</td>
+<td align="right">2.35</td>
+<td align="right">2.35</td>
+<td align="right">98.25</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">363</td>
+<td align="right">1.75</td>
+<td align="right">1.75</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f12-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-1" class="section level4">
+<h4><span class="header-section-number">2.1.2.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-1" class="section level4">
+<h4><span class="header-section-number">2.1.2.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">4051</td>
+<td align="right">19.54</td>
+<td align="right">19.54</td>
+<td align="right">19.54</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">15831</td>
+<td align="right">76.36</td>
+<td align="right">76.36</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.90</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">488</td>
+<td align="right">2.35</td>
+<td align="right">2.35</td>
+<td align="right">98.25</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">363</td>
+<td align="right">1.75</td>
+<td align="right">1.75</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d12-1.png" width="672" /></p>
+</div>
+<div id="validation-1" class="section level4">
+<h4><span class="header-section-number">2.1.2.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">4051</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">15831</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">488</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">363</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-3" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Wave 3</h3>
+<div id="study-specific-variable-description-2" class="section level4">
+<h4><span class="header-section-number">2.1.3.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W3</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">5121</td>
+<td align="right">25.18</td>
+<td align="right">25.18</td>
+<td align="right">25.18</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">13719</td>
+<td align="right">67.46</td>
+<td align="right">67.46</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1278</td>
+<td align="right">6.28</td>
+<td align="right">6.28</td>
+<td align="right">98.92</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">220</td>
+<td align="right">1.08</td>
+<td align="right">1.08</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f13-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-2" class="section level4">
+<h4><span class="header-section-number">2.1.3.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-2" class="section level4">
+<h4><span class="header-section-number">2.1.3.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">5121</td>
+<td align="right">25.18</td>
+<td align="right">25.18</td>
+<td align="right">25.18</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">13719</td>
+<td align="right">67.46</td>
+<td align="right">67.46</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">92.63</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1278</td>
+<td align="right">6.28</td>
+<td align="right">6.28</td>
+<td align="right">98.92</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">220</td>
+<td align="right">1.08</td>
+<td align="right">1.08</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d13-1.png" width="672" /></p>
+</div>
+<div id="validation-2" class="section level4">
+<h4><span class="header-section-number">2.1.3.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">5121</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">13719</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1278</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">220</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-4" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Wave 4</h3>
+<div id="study-specific-variable-description-3" class="section level4">
+<h4><span class="header-section-number">2.1.4.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W4</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">11261</td>
+<td align="right">59.00</td>
+<td align="right">59.00</td>
+<td align="right">59.00</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">5404</td>
+<td align="right">28.31</td>
+<td align="right">28.31</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">2335</td>
+<td align="right">12.23</td>
+<td align="right">12.23</td>
+<td align="right">99.54</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">87</td>
+<td align="right">0.46</td>
+<td align="right">0.46</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f14-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-3" class="section level4">
+<h4><span class="header-section-number">2.1.4.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-3" class="section level4">
+<h4><span class="header-section-number">2.1.4.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">11261</td>
+<td align="right">59.00</td>
+<td align="right">59.00</td>
+<td align="right">59.00</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">5404</td>
+<td align="right">28.31</td>
+<td align="right">28.31</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">87.31</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">2335</td>
+<td align="right">12.23</td>
+<td align="right">12.23</td>
+<td align="right">99.54</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">87</td>
+<td align="right">0.46</td>
+<td align="right">0.46</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d14-1.png" width="672" /></p>
+</div>
+<div id="validation-3" class="section level4">
+<h4><span class="header-section-number">2.1.4.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">11261</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">5404</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2335</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">87</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-5" class="section level3">
+<h3><span class="header-section-number">2.1.5</span> Wave 5</h3>
+<div id="study-specific-variable-description-4" class="section level4">
+<h4><span class="header-section-number">2.1.5.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W5</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">12138</td>
+<td align="right">71.84</td>
+<td align="right">71.84</td>
+<td align="right">71.84</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">449</td>
+<td align="right">2.66</td>
+<td align="right">2.66</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">4158</td>
+<td align="right">24.61</td>
+<td align="right">24.61</td>
+<td align="right">99.11</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">151</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f15-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-4" class="section level4">
+<h4><span class="header-section-number">2.1.5.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-4" class="section level4">
+<h4><span class="header-section-number">2.1.5.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">12138</td>
+<td align="right">71.84</td>
+<td align="right">71.84</td>
+<td align="right">71.84</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">449</td>
+<td align="right">2.66</td>
+<td align="right">2.66</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">74.50</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">4158</td>
+<td align="right">24.61</td>
+<td align="right">24.61</td>
+<td align="right">99.11</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">151</td>
+<td align="right">0.89</td>
+<td align="right">0.89</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d15-1.png" width="672" /></p>
+</div>
+<div id="validation-4" class="section level4">
+<h4><span class="header-section-number">2.1.5.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">12138</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">449</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">4158</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">151</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-6" class="section level3">
+<h3><span class="header-section-number">2.1.6</span> Wave 6</h3>
+<div id="study-specific-variable-description-5" class="section level4">
+<h4><span class="header-section-number">2.1.6.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG1W6</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">8033</td>
+<td align="right">62.76</td>
+<td align="right">62.76</td>
+<td align="right">62.76</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">90</td>
+<td align="right">0.70</td>
+<td align="right">0.70</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">4594</td>
+<td align="right">35.89</td>
+<td align="right">35.89</td>
+<td align="right">99.35</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">83</td>
+<td align="right">0.65</td>
+<td align="right">0.65</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f16-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-5" class="section level4">
+<h4><span class="header-section-number">2.1.6.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-5" class="section level4">
+<h4><span class="header-section-number">2.1.6.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">8033</td>
+<td align="right">62.76</td>
+<td align="right">62.76</td>
+<td align="right">62.76</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">90</td>
+<td align="right">0.70</td>
+<td align="right">0.70</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">63.46</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">4594</td>
+<td align="right">35.89</td>
+<td align="right">35.89</td>
+<td align="right">99.35</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">83</td>
+<td align="right">0.65</td>
+<td align="right">0.65</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d16-1.png" width="672" /></p>
+</div>
+<div id="validation-5" class="section level4">
+<h4><span class="header-section-number">2.1.6.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">8033</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">90</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">4594</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">83</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+<!-- ###################################################################################################### -->
+<!-- ###################################################################################################### -->
+</div>
+</div>
+</div>
+<div id="uppsala-2nd-generation-cohort" class="section level2">
+<h2><span class="header-section-number">2.2</span> Uppsala 2nd generation cohort</h2>
+<div id="wave-1-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Wave 1</h3>
+<div id="study-specific-variable-description-6" class="section level4">
+<h4><span class="header-section-number">2.2.1.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W1</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">378</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">3724</td>
+<td align="right">11.27</td>
+<td align="right">11.27</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">28950</td>
+<td align="right">87.59</td>
+<td align="right">87.59</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f21-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-6" class="section level4">
+<h4><span class="header-section-number">2.2.1.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-6" class="section level4">
+<h4><span class="header-section-number">2.2.1.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">378</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">3724</td>
+<td align="right">11.27</td>
+<td align="right">11.27</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">12.41</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">28950</td>
+<td align="right">87.59</td>
+<td align="right">87.59</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d21-1.png" width="672" /></p>
+</div>
+<div id="validation-6" class="section level4">
+<h4><span class="header-section-number">2.2.1.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">378</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">3724</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">28950</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-2-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Wave 2</h3>
+<div id="study-specific-variable-description-7" class="section level4">
+<h4><span class="header-section-number">2.2.2.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W2</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">23414</td>
+<td align="right">60.88</td>
+<td align="right">60.88</td>
+<td align="right">60.88</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">13502</td>
+<td align="right">35.11</td>
+<td align="right">35.11</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">181</td>
+<td align="right">0.47</td>
+<td align="right">0.47</td>
+<td align="right">96.46</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1361</td>
+<td align="right">3.54</td>
+<td align="right">3.54</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f22-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-7" class="section level4">
+<h4><span class="header-section-number">2.2.2.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-7" class="section level4">
+<h4><span class="header-section-number">2.2.2.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">23414</td>
+<td align="right">60.88</td>
+<td align="right">60.88</td>
+<td align="right">60.88</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">13502</td>
+<td align="right">35.11</td>
+<td align="right">35.11</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.99</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">181</td>
+<td align="right">0.47</td>
+<td align="right">0.47</td>
+<td align="right">96.46</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1361</td>
+<td align="right">3.54</td>
+<td align="right">3.54</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d22-1.png" width="672" /></p>
+</div>
+<div id="validation-7" class="section level4">
+<h4><span class="header-section-number">2.2.2.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">23414</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">13502</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">181</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1361</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-3-1" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Wave 3</h3>
+<div id="study-specific-variable-description-8" class="section level4">
+<h4><span class="header-section-number">2.2.3.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W3</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">9348</td>
+<td align="right">24.12</td>
+<td align="right">24.12</td>
+<td align="right">24.12</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">27929</td>
+<td align="right">72.08</td>
+<td align="right">72.08</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">441</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+<td align="right">97.34</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1031</td>
+<td align="right">2.66</td>
+<td align="right">2.66</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f23-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-8" class="section level4">
+<h4><span class="header-section-number">2.2.3.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-8" class="section level4">
+<h4><span class="header-section-number">2.2.3.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">9348</td>
+<td align="right">24.12</td>
+<td align="right">24.12</td>
+<td align="right">24.12</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">27929</td>
+<td align="right">72.08</td>
+<td align="right">72.08</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.20</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">441</td>
+<td align="right">1.14</td>
+<td align="right">1.14</td>
+<td align="right">97.34</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">1031</td>
+<td align="right">2.66</td>
+<td align="right">2.66</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d23-1.png" width="672" /></p>
+</div>
+<div id="validation-8" class="section level4">
+<h4><span class="header-section-number">2.2.3.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">9348</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">27929</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">441</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1031</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-4-1" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Wave 4</h3>
+<div id="study-specific-variable-description-9" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W4</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">3419</td>
+<td align="right">8.91</td>
+<td align="right">8.91</td>
+<td align="right">8.91</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">34122</td>
+<td align="right">88.94</td>
+<td align="right">88.94</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">616</td>
+<td align="right">1.61</td>
+<td align="right">1.61</td>
+<td align="right">99.46</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">209</td>
+<td align="right">0.54</td>
+<td align="right">0.54</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f24-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-9" class="section level4">
+<h4><span class="header-section-number">2.2.4.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-9" class="section level4">
+<h4><span class="header-section-number">2.2.4.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">3419</td>
+<td align="right">8.91</td>
+<td align="right">8.91</td>
+<td align="right">8.91</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">34122</td>
+<td align="right">88.94</td>
+<td align="right">88.94</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">97.85</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">616</td>
+<td align="right">1.61</td>
+<td align="right">1.61</td>
+<td align="right">99.46</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">209</td>
+<td align="right">0.54</td>
+<td align="right">0.54</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d24-1.png" width="672" /></p>
+</div>
+<div id="validation-9" class="section level4">
+<h4><span class="header-section-number">2.2.4.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">3419</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">34122</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">616</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">209</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-5-1" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Wave 5</h3>
+<div id="study-specific-variable-description-10" class="section level4">
+<h4><span class="header-section-number">2.2.5.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W5</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">5533</td>
+<td align="right">14.61</td>
+<td align="right">14.61</td>
+<td align="right">14.61</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">31002</td>
+<td align="right">81.86</td>
+<td align="right">81.86</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1198</td>
+<td align="right">3.16</td>
+<td align="right">3.16</td>
+<td align="right">99.63</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">140</td>
+<td align="right">0.37</td>
+<td align="right">0.37</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f25-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-10" class="section level4">
+<h4><span class="header-section-number">2.2.5.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-10" class="section level4">
+<h4><span class="header-section-number">2.2.5.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">5533</td>
+<td align="right">14.61</td>
+<td align="right">14.61</td>
+<td align="right">14.61</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">31002</td>
+<td align="right">81.86</td>
+<td align="right">81.86</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">96.47</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1198</td>
+<td align="right">3.16</td>
+<td align="right">3.16</td>
+<td align="right">99.63</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">140</td>
+<td align="right">0.37</td>
+<td align="right">0.37</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d25-1.png" width="672" /></p>
+</div>
+<div id="validation-10" class="section level4">
+<h4><span class="header-section-number">2.2.5.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">5533</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">31002</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1198</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">140</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+</div>
+</div>
+<div id="wave-6-1" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> Wave 6</h3>
+<div id="study-specific-variable-description-11" class="section level4">
+<h4><span class="header-section-number">2.2.6.1</span> Study-specific variable description</h4>
+<ul>
+<li>Name: <code>employed</code></li>
+<li>Label: <code>Individual is employed</code></li>
+<li>Table name: <code>ubcosG2W6</code></li>
+<li>Description:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">8301</td>
+<td align="right">22.55</td>
+<td align="right">22.55</td>
+<td align="right">22.55</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">26999</td>
+<td align="right">73.33</td>
+<td align="right">73.33</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1475</td>
+<td align="right">4.01</td>
+<td align="right">4.01</td>
+<td align="right">99.88</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">44</td>
+<td align="right">0.12</td>
+<td align="right">0.12</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/f26-1.png" width="672" /></p>
+</div>
+<div id="harmonisation-algorithm-11" class="section level4">
+<h4><span class="header-section-number">2.2.6.2</span> Harmonisation algorithm</h4>
+<p>No changes.</p>
+<p><strong>R script:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &#39;sds&#39;: study dataset</span>
+<span class="co"># &#39;hds&#39;: harmonised dataset</span>
+hds &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id=</span>sds[[<span class="dv">1</span>]], <span class="dt">employed=</span>sds[[<span class="dv">2</span>]])</code></pre></div>
+</div>
+<div id="statistical-description-of-the-new-harmonised-variable-11" class="section level4">
+<h4><span class="header-section-number">2.2.6.3</span> Statistical description of the new harmonised variable</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="right">val</th>
+<th align="left">label</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+<th align="right">valid.prc</th>
+<th align="right">cum.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">No</td>
+<td align="right">8301</td>
+<td align="right">22.55</td>
+<td align="right">22.55</td>
+<td align="right">22.55</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Yes</td>
+<td align="right">26999</td>
+<td align="right">73.33</td>
+<td align="right">73.33</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="odd">
+<td align="right">991</td>
+<td align="left">CAPI interviewer error</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="even">
+<td align="right">992</td>
+<td align="left">Impute</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="odd">
+<td align="right">993</td>
+<td align="left">Disable to measure</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">95.87</td>
+</tr>
+<tr class="even">
+<td align="right">994</td>
+<td align="left">Not applicable</td>
+<td align="right">1475</td>
+<td align="right">4.01</td>
+<td align="right">4.01</td>
+<td align="right">99.88</td>
+</tr>
+<tr class="odd">
+<td align="right">995</td>
+<td align="left">Does not answer</td>
+<td align="right">44</td>
+<td align="right">0.12</td>
+<td align="right">0.12</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">996</td>
+<td align="left">Not attempt not done</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">997</td>
+<td align="left">Refuse</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">998</td>
+<td align="left">Do not know</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right">999</td>
+<td align="left">Missing</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><img src="10_employed_files/figure-html/d26-1.png" width="672" /></p>
+</div>
+<div id="validation-11" class="section level4">
+<h4><span class="header-section-number">2.2.6.4</span> Validation</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">0</th>
+<th align="right">1</th>
+<th align="right">994</th>
+<th align="right">995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td align="right">8301</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="right">0</td>
+<td align="right">26999</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td>994</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1475</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>995</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">44</td>
+</tr>
+</tbody>
+</table>
+<!--- ################## Save harmonised datasets ###################-->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+</div>
+</div>
+</div>
+<div id="validation-accross-waves" class="section level2">
+<h2><span class="header-section-number">2.3</span> Validation accross waves</h2>
+<p>The validation consists of checking just the most frequent trajectories of employed.</p>
+<p><strong>R script</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For 1st generation:</span>
+list_df &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w1$id, <span class="dt">employed1=</span>UBCoS_m_g1_w1$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w2$id, <span class="dt">employed2=</span>UBCoS_m_g1_w2$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w3$id, <span class="dt">employed3=</span>UBCoS_m_g1_w3$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w4$id, <span class="dt">employed4=</span>UBCoS_m_g1_w4$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w5$id, <span class="dt">employed5=</span>UBCoS_m_g1_w5$employed), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g1_w6$id, <span class="dt">employed6=</span>UBCoS_m_g1_w6$employed))
+MyMerge &lt;-<span class="st"> </span>function(x, y){
+  df &lt;-<span class="st"> </span><span class="kw">full_join</span>(x, y, <span class="dt">by=</span> <span class="st">&quot;id&quot;</span>)
+  <span class="kw">return</span>(df)
+}
+new.df &lt;-<span class="st"> </span><span class="kw">Reduce</span>(MyMerge, list_df)
+
+v.ndf &lt;-<span class="st"> </span><span class="kw">with</span>(new.df, <span class="kw">paste</span>(employed1, employed2, employed3, employed4, employed5, employed6,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>))
+ff &lt;-<span class="st"> </span><span class="kw">frq</span>(v.ndf)[[<span class="dv">1</span>]][,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]
+ff &lt;-<span class="st"> </span>ff[ff[,<span class="dv">3</span>]&gt;=<span class="fl">0.3</span>,]
+<span class="kw">kable</span>(ff[<span class="kw">order</span>(-ff$frq),])</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>252</td>
+<td align="left">NANANANANANA</td>
+<td align="right">2082</td>
+<td align="right">9.19</td>
+</tr>
+<tr class="even">
+<td>128</td>
+<td align="left">111000</td>
+<td align="right">1781</td>
+<td align="right">7.86</td>
+</tr>
+<tr class="odd">
+<td>135</td>
+<td align="left">111100</td>
+<td align="right">1526</td>
+<td align="right">6.74</td>
+</tr>
+<tr class="even">
+<td>134</td>
+<td align="left">1110NANA</td>
+<td align="right">1441</td>
+<td align="right">6.36</td>
+</tr>
+<tr class="odd">
+<td>129</td>
+<td align="left">11100NA</td>
+<td align="right">1431</td>
+<td align="right">6.32</td>
+</tr>
+<tr class="even">
+<td>55</td>
+<td align="left">011100</td>
+<td align="right">903</td>
+<td align="right">3.99</td>
+</tr>
+<tr class="odd">
+<td>146</td>
+<td align="left">111NANANA</td>
+<td align="right">895</td>
+<td align="right">3.95</td>
+</tr>
+<tr class="even">
+<td>49</td>
+<td align="left">011000</td>
+<td align="right">875</td>
+<td align="right">3.86</td>
+</tr>
+<tr class="odd">
+<td>119</td>
+<td align="left">1100NANA</td>
+<td align="right">764</td>
+<td align="right">3.37</td>
+</tr>
+<tr class="even">
+<td>156</td>
+<td align="left">11NANANANA</td>
+<td align="right">716</td>
+<td align="right">3.16</td>
+</tr>
+<tr class="odd">
+<td>137</td>
+<td align="left">11110NA</td>
+<td align="right">618</td>
+<td align="right">2.73</td>
+</tr>
+<tr class="even">
+<td>127</td>
+<td align="left">110NANANA</td>
+<td align="right">573</td>
+<td align="right">2.53</td>
+</tr>
+<tr class="odd">
+<td>117</td>
+<td align="left">11000NA</td>
+<td align="right">535</td>
+<td align="right">2.36</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td align="left">000000</td>
+<td align="right">501</td>
+<td align="right">2.21</td>
+</tr>
+<tr class="odd">
+<td>142</td>
+<td align="left">1111NANA</td>
+<td align="right">458</td>
+<td align="right">2.02</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td align="left">001100</td>
+<td align="right">442</td>
+<td align="right">1.95</td>
+</tr>
+<tr class="odd">
+<td>51</td>
+<td align="left">01100NA</td>
+<td align="right">395</td>
+<td align="right">1.74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="left">00000NA</td>
+<td align="right">391</td>
+<td align="right">1.73</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td align="left">001000</td>
+<td align="right">364</td>
+<td align="right">1.61</td>
+</tr>
+<tr class="even">
+<td>177</td>
+<td align="left">1NANANANANA</td>
+<td align="right">337</td>
+<td align="right">1.49</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td align="left">0000NANA</td>
+<td align="right">324</td>
+<td align="right">1.43</td>
+</tr>
+<tr class="even">
+<td>116</td>
+<td align="left">110000</td>
+<td align="right">311</td>
+<td align="right">1.37</td>
+</tr>
+<tr class="odd">
+<td>54</td>
+<td align="left">0110NANA</td>
+<td align="right">260</td>
+<td align="right">1.15</td>
+</tr>
+<tr class="even">
+<td>36</td>
+<td align="left">010000</td>
+<td align="right">205</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="odd">
+<td>38</td>
+<td align="left">01000NA</td>
+<td align="right">184</td>
+<td align="right">0.81</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td align="left">00100NA</td>
+<td align="right">170</td>
+<td align="right">0.75</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td align="left">000NANANA</td>
+<td align="right">158</td>
+<td align="right">0.70</td>
+</tr>
+<tr class="even">
+<td>65</td>
+<td align="left">011NANANA</td>
+<td align="right">155</td>
+<td align="right">0.68</td>
+</tr>
+<tr class="odd">
+<td>57</td>
+<td align="left">01110NA</td>
+<td align="right">136</td>
+<td align="right">0.60</td>
+</tr>
+<tr class="even">
+<td>41</td>
+<td align="left">0100NANA</td>
+<td align="right">134</td>
+<td align="right">0.59</td>
+</tr>
+<tr class="odd">
+<td>215</td>
+<td align="left">NA11100</td>
+<td align="right">133</td>
+<td align="right">0.59</td>
+</tr>
+<tr class="even">
+<td>102</td>
+<td align="left">101100</td>
+<td align="right">129</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="odd">
+<td>115</td>
+<td align="left">10NANANANA</td>
+<td align="right">128</td>
+<td align="right">0.56</td>
+</tr>
+<tr class="even">
+<td>138</td>
+<td align="left">111110</td>
+<td align="right">126</td>
+<td align="right">0.56</td>
+</tr>
+<tr class="odd">
+<td>35</td>
+<td align="left">00NANANANA</td>
+<td align="right">125</td>
+<td align="right">0.55</td>
+</tr>
+<tr class="even">
+<td>88</td>
+<td align="left">0NANANANANA</td>
+<td align="right">120</td>
+<td align="right">0.53</td>
+</tr>
+<tr class="odd">
+<td>97</td>
+<td align="left">100NANANA</td>
+<td align="right">115</td>
+<td align="right">0.51</td>
+</tr>
+<tr class="even">
+<td>70</td>
+<td align="left">01NANANANA</td>
+<td align="right">113</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="odd">
+<td>91</td>
+<td align="left">1000NANA</td>
+<td align="right">101</td>
+<td align="right">0.45</td>
+</tr>
+<tr class="even">
+<td>90</td>
+<td align="left">10000NA</td>
+<td align="right">95</td>
+<td align="right">0.42</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td align="left">0010NANA</td>
+<td align="right">92</td>
+<td align="right">0.41</td>
+</tr>
+<tr class="even">
+<td>210</td>
+<td align="left">NA11000</td>
+<td align="right">92</td>
+<td align="right">0.41</td>
+</tr>
+<tr class="odd">
+<td>48</td>
+<td align="left">010NANANA</td>
+<td align="right">89</td>
+<td align="right">0.39</td>
+</tr>
+<tr class="even">
+<td>89</td>
+<td align="left">100000</td>
+<td align="right">88</td>
+<td align="right">0.39</td>
+</tr>
+<tr class="odd">
+<td>214</td>
+<td align="left">NA110NANA</td>
+<td align="right">85</td>
+<td align="right">0.38</td>
+</tr>
+<tr class="even">
+<td>62</td>
+<td align="left">0111NANA</td>
+<td align="right">84</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="odd">
+<td>211</td>
+<td align="left">NA1100NA</td>
+<td align="right">77</td>
+<td align="right">0.34</td>
+</tr>
+<tr class="even">
+<td>98</td>
+<td align="left">101000</td>
+<td align="right">75</td>
+<td align="right">0.33</td>
+</tr>
+<tr class="odd">
+<td>223</td>
+<td align="left">NA11NANANA</td>
+<td align="right">74</td>
+<td align="right">0.33</td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td align="left">00110NA</td>
+<td align="right">70</td>
+<td align="right">0.31</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For 2nd generation:**</span>
+list_df &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w1$id, <span class="dt">employed1=</span>UBCoS_m_g2_w1$employed), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w2$id, <span class="dt">employed2=</span>UBCoS_m_g2_w2$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w3$id, <span class="dt">employed3=</span>UBCoS_m_g2_w3$employed),                
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w4$id, <span class="dt">employed4=</span>UBCoS_m_g2_w4$employed),
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w5$id, <span class="dt">employed5=</span>UBCoS_m_g2_w5$employed), 
+                <span class="kw">tibble</span>(<span class="dt">id=</span> UBCoS_m_g2_w6$id, <span class="dt">employed6=</span>UBCoS_m_g2_w6$employed))
+
+new.df &lt;-<span class="st"> </span><span class="kw">Reduce</span>(MyMerge, list_df)
+
+v.ndf &lt;-<span class="st"> </span><span class="kw">with</span>(new.df, <span class="kw">paste</span>(employed1, employed2, employed3, employed4, employed5, employed6,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>))
+ff &lt;-<span class="st"> </span><span class="kw">frq</span>(v.ndf)[[<span class="dv">1</span>]][,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]
+ff &lt;-<span class="st"> </span>ff[ff[,<span class="dv">3</span>]&gt;=<span class="fl">0.3</span>,]
+<span class="kw">kable</span>(ff[<span class="kw">order</span>(-ff$frq),])</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">val</th>
+<th align="right">frq</th>
+<th align="right">raw.prc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>215</td>
+<td align="left">NA01111</td>
+<td align="right">11237</td>
+<td align="right">28.83</td>
+</tr>
+<tr class="even">
+<td>279</td>
+<td align="left">NA11111</td>
+<td align="right">5649</td>
+<td align="right">14.49</td>
+</tr>
+<tr class="odd">
+<td>192</td>
+<td align="left">NA00111</td>
+<td align="right">4588</td>
+<td align="right">11.77</td>
+</tr>
+<tr class="even">
+<td>278</td>
+<td align="left">NA11110</td>
+<td align="right">1429</td>
+<td align="right">3.67</td>
+</tr>
+<tr class="odd">
+<td>214</td>
+<td align="left">NA01110</td>
+<td align="right">1008</td>
+<td align="right">2.59</td>
+</tr>
+<tr class="even">
+<td>124</td>
+<td align="left">111110</td>
+<td align="right">940</td>
+<td align="right">2.41</td>
+</tr>
+<tr class="odd">
+<td>257</td>
+<td align="left">NA10111</td>
+<td align="right">755</td>
+<td align="right">1.94</td>
+</tr>
+<tr class="even">
+<td>125</td>
+<td align="left">111111</td>
+<td align="right">616</td>
+<td align="right">1.58</td>
+</tr>
+<tr class="odd">
+<td>275</td>
+<td align="left">NA11100</td>
+<td align="right">599</td>
+<td align="right">1.54</td>
+</tr>
+<tr class="even">
+<td>211</td>
+<td align="left">NA01100</td>
+<td align="right">569</td>
+<td align="right">1.46</td>
+</tr>
+<tr class="odd">
+<td>121</td>
+<td align="left">111100</td>
+<td align="right">529</td>
+<td align="right">1.36</td>
+</tr>
+<tr class="even">
+<td>183</td>
+<td align="left">NA00011</td>
+<td align="right">482</td>
+<td align="right">1.24</td>
+</tr>
+<tr class="odd">
+<td>206</td>
+<td align="left">NA01011</td>
+<td align="right">463</td>
+<td align="right">1.19</td>
+</tr>
+<tr class="even">
+<td>212</td>
+<td align="left">NA01101</td>
+<td align="right">453</td>
+<td align="right">1.16</td>
+</tr>
+<tr class="odd">
+<td>189</td>
+<td align="left">NA00101</td>
+<td align="right">352</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="even">
+<td>191</td>
+<td align="left">NA00110</td>
+<td align="right">337</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="odd">
+<td>188</td>
+<td align="left">NA00100</td>
+<td align="right">317</td>
+<td align="right">0.81</td>
+</tr>
+<tr class="even">
+<td>339</td>
+<td align="left">NANA1111</td>
+<td align="right">306</td>
+<td align="right">0.79</td>
+</tr>
+<tr class="odd">
+<td>216</td>
+<td align="left">NA0111NA</td>
+<td align="right">292</td>
+<td align="right">0.75</td>
+</tr>
+<tr class="even">
+<td>179</td>
+<td align="left">NA00000</td>
+<td align="right">266</td>
+<td align="right">0.68</td>
+</tr>
+<tr class="odd">
+<td>374</td>
+<td align="left">NANANANANANA</td>
+<td align="right">251</td>
+<td align="right">0.64</td>
+</tr>
+<tr class="even">
+<td>219</td>
+<td align="left">NA011NANA</td>
+<td align="right">240</td>
+<td align="right">0.62</td>
+</tr>
+<tr class="odd">
+<td>280</td>
+<td align="left">NA1111NA</td>
+<td align="right">224</td>
+<td align="right">0.57</td>
+</tr>
+<tr class="even">
+<td>276</td>
+<td align="left">NA11101</td>
+<td align="right">204</td>
+<td align="right">0.52</td>
+</tr>
+<tr class="odd">
+<td>320</td>
+<td align="left">NANA0111</td>
+<td align="right">202</td>
+<td align="right">0.52</td>
+</tr>
+<tr class="even">
+<td>83</td>
+<td align="left">101110</td>
+<td align="right">194</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="odd">
+<td>283</td>
+<td align="left">NA111NANA</td>
+<td align="right">189</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="even">
+<td>245</td>
+<td align="left">NA0NANANANA</td>
+<td align="right">188</td>
+<td align="right">0.48</td>
+</tr>
+<tr class="odd">
+<td>311</td>
+<td align="left">NANA0011</td>
+<td align="right">179</td>
+<td align="right">0.46</td>
+</tr>
+<tr class="even">
+<td>202</td>
+<td align="left">NA01000</td>
+<td align="right">167</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="odd">
+<td>224</td>
+<td align="left">NA01NANANA</td>
+<td align="right">147</td>
+<td align="right">0.38</td>
+</tr>
+<tr class="even">
+<td>84</td>
+<td align="left">101111</td>
+<td align="right">136</td>
+<td align="right">0.35</td>
+</tr>
+<tr class="odd">
+<td>237</td>
+<td align="left">NA0NA111</td>
+<td align="right">130</td>
+<td align="right">0.33</td>
+</tr>
+<tr class="even">
+<td>266</td>
+<td align="left">NA11000</td>
+<td align="right">127</td>
+<td align="right">0.33</td>
+</tr>
+<tr class="odd">
+<td>256</td>
+<td align="left">NA10110</td>
+<td align="right">126</td>
+<td align="right">0.32</td>
+</tr>
+<tr class="even">
+<td>270</td>
+<td align="left">NA11011</td>
+<td align="right">126</td>
+<td align="right">0.32</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="quality-estimation" class="section level1">
+<h1><span class="header-section-number">3</span> Quality estimation</h1>
+<p>[Comments on the quality of the new harmonised variable.]</p>
+</div>
+
+<p><em> ATHLOS project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 635316.</em></p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
