@@ -6,7 +6,7 @@ navbar:
   left:
     - text: "About"
       icon: fa-home
-      href: ubcos_h.html
+      href: index.html
     - text: "Sociodemog. & Econ."
       icon: fa-gear
       menu:

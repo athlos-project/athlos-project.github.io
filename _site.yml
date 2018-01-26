@@ -11,7 +11,7 @@ navbar:
       icon: fa-gear
       menu:
         - text: "UBCoS"
-          href: UBCoS/ubcos_h.html
+          href: UBCoS/index.html
 
 output:
   html_document:
