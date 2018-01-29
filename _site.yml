@@ -10,6 +10,40 @@ navbar:
     - text: "Sudies"
       icon: fa-gear
       menu:
+        - text: "10-66"
+          href: 1066/index.html
+        - text: "ALSA"
+          href: ALSA/index.html
+        - text: "CHARLS"
+          href: CHARLS/index.html
+        - text: "COURAGE"
+          href: COURAGE/index.html
+        - text: "ELSA"
+          href: ELSA/index.html
+        - text: "ENRICA"
+          href: ENRICA/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
+        - text: "UBCoS"
+          href: UBCoS/index.html
         - text: "UBCoS"
           href: UBCoS/index.html
 
